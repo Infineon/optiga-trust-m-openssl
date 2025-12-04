@@ -1,0 +1,34 @@
+# SPDX-FileCopyrightText: 2025 Infineon Technologies AG
+# SPDX-License-Identifier: MIT
+
+version = 1
+
+# root
+[[annotations]]
+path = ["CHANGELOG.md", "CONTRIBUTING.md", "README.md", "examples/scripts/openssl_multisession_test/README.md"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 Infineon Technologies AG"
+SPDX-License-Identifier = "CC-BY-NC-ND-4.0"
+
+# data/images
+[[annotations]]
+path = ["data/images/**"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 Infineon Technologies AG"
+SPDX-License-Identifier = "CC-BY-NC-ND-4.0"
+
+# .cnf files
+[[annotations]]
+path = ["examples/scripts/openssl.cnf",
+        "examples/scripts/openssl_multisession_test/openssl.cnf",
+        "examples/scripts/openssl_multisession_test/root_ca.cnf",
+        "examples/scripts/openssl_trustm_as_CA/openssl.cnf",
+        "examples/scripts/trustm_curl_test/cert_ext_trustm.cnf",
+        "examples/scripts/trustm_curl_test/server.cnf",
+        "examples/scripts/trustm_curl_test/openssl.cnf",
+        "examples/scripts/trustm_curl_test/cert_ext.cnf",
+        "examples/scripts/ec_server_client_pem_file/openssl.cnf",
+        "examples/scripts/trustm_curl_test/ca/root_ca.cnf"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021-2025 Infineon Technologies AG"
+SPDX-License-Identifier = "CC-BY-NC-ND-4.0"

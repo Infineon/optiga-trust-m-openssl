@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 2025 Infineon Technologies AG
+#
+# SPDX-License-Identifier: MIT
+
 [submodule "external/optiga-trust-m"]
 	path = external/optiga-trust-m
 	url = https://github.com/Infineon/optiga-trust-m.git

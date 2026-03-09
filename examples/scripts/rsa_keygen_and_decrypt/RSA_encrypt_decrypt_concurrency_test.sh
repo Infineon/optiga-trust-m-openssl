@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# SPDX-FileCopyrightText: 2025 Infineon Technologies AG
-#
+# SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
 # SPDX-License-Identifier: MIT
 
 source config.sh
@@ -12,8 +11,8 @@ echo "input2" >mydata2.txt
 for i in $(seq 1 5); do
 echo "$(date +'%m/%d:%r') --------------> test $i"
 set +e
-rm *.enc
-rm *.dec
+rm *.enc || true
+rm *.dec || true
 set -e
 echo "-----> Encrypt with public key using Trust M provider"
 openssl pkeyutl -provider trustm_provider -inkey 0xe0fd:^ -encrypt -in mydata1.txt -out mydata1.enc &

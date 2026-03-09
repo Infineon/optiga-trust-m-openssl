@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
 
-# SPDX-FileCopyrightText: 2025 Infineon Technologies AG
-#
+# SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
 # SPDX-License-Identifier: MIT
 
 . ${PWD}/config.sh

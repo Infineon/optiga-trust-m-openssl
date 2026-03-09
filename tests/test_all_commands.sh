@@ -1,12 +1,13 @@
 #!/bin/bash
 
-# SPDX-FileCopyrightText: 2025 Infineon Technologies AG
-#
+# SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
 # SPDX-License-Identifier: MIT
 
-rm *.sig
-rm *.pem
-rm *.txt
+set +e
+
+rm *.sig || true
+rm *.pem || true
+rm *.txt || true
 
 set -e
 echo "input" >mydata.txt
@@ -32,6 +33,12 @@ echo "-----> Openssl Provider:Ecc Signature256 by TrustM:"
 openssl pkeyutl -provider trustm_provider -inkey 0xe0f2:^  -sign -rawin -in mydata.txt -out test_sign_e0f2.sig &
 echo "-----> Openssl Provider:Ecc Signature256 by TrustM:"
 openssl pkeyutl -provider trustm_provider -inkey 0xe0f3:^  -sign -rawin -in mydata.txt -out test_sign_e0f3.sig &
+
+set +e
+
+rm *.sig || true
+rm *.pem || true
+rm *.txt || true
 
 #~ echo "--------------> waiting 60s .."
 #~ sleep 160

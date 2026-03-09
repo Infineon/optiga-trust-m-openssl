@@ -1,9 +1,8 @@
-# SPDX-FileCopyrightText: 2025 Infineon Technologies AG
-#
+# SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
 # SPDX-License-Identifier: MIT
 
-rm *.txt
-rm *.dec
-rm *.enc
-rm *.pem
-rm *.pub
+rm *.txt || true
+rm *.dec || true
+rm *.enc || true
+rm *.pem || true
+rm *.pub || true

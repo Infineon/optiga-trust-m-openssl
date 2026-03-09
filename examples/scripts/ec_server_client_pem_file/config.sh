@@ -1,5 +1,4 @@
-# SPDX-FileCopyrightText: 2025 2025 Infineon Technologies AG
-#
+# SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
 # SPDX-License-Identifier: MIT
 
 PROJECT_DIR=$(dirname "$(dirname "$(dirname "$(pwd)")")")

@@ -1,13 +1,12 @@
 #!/bin/bash
 
-# SPDX-FileCopyrightText: 2025 Infineon Technologies AG
-#
+# SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
 # SPDX-License-Identifier: MIT
 
 
-rm *.crt
-rm *.csr
-rm *.key
+rm *.crt || true
+rm *.csr || true
+rm *.key || true
 
 
 

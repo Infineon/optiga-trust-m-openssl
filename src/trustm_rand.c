@@ -1,15 +1,11 @@
-#include <string.h>
-
-/*
- * SPDX-FileCopyrightText: 2025 Infineon Technologies AG
- *
- * SPDX-License-Identifier: MIT
- */
+// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-License-Identifier: MIT
 
 #include <openssl/core_dispatch.h>
 #include <openssl/core_names.h>
 #include <openssl/crypto.h>
 #include <openssl/params.h>
+#include <string.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
 
@@ -188,7 +184,8 @@ static const OSSL_PARAM *trustm_rand_gettable_ctx_params(void *ctx, void *provct
         OSSL_PARAM_int(OSSL_RAND_PARAM_STATE, NULL),
         OSSL_PARAM_uint(OSSL_RAND_PARAM_STRENGTH, NULL),
         OSSL_PARAM_size_t(OSSL_RAND_PARAM_MAX_REQUEST, NULL),
-        OSSL_PARAM_END};
+        OSSL_PARAM_END
+    };
     return known_gettable_ctx_params;
 }
 
@@ -224,4 +221,5 @@ const OSSL_DISPATCH trustm_rand_functions[] = {
     {OSSL_FUNC_RAND_UNLOCK, (void (*)(void))trustm_rand_unlock},
     {OSSL_FUNC_RAND_GETTABLE_CTX_PARAMS, (void (*)(void))trustm_rand_gettable_ctx_params},
     {OSSL_FUNC_RAND_GET_CTX_PARAMS, (void (*)(void))trustm_rand_get_ctx_params},
-    {0, NULL}};
+    {0, NULL}
+};

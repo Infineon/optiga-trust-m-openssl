@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# SPDX-FileCopyrightText: 2025 Infineon Technologies AG
-#
+# SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
 # SPDX-License-Identifier: MIT
 
 sudo apt update 
@@ -25,16 +24,16 @@ clear
 
 if [ -e $IFX_CERT_KEY ]
 then
-	echo "TEST CA key ok"
+    echo "TEST CA key ok"
 else
-	if [ ! -d certificates ]
-	then
-	mkdir certificates
-	fi
-	echo "Generate Test CA Key"
-	openssl ecparam -out $IFX_CERT_KEY -name prime256v1 -genkey
-	echo "Generate Test CA Certificate"
-	openssl req -new -x509 -days 3650 -key $IFX_CERT_KEY -subj "/CN=Infineon OPTIGA(TM) Trust M Test CA/O=Infineon Technologies AG/OU=OPTIGA(TM)/C=DE" -out $IFX_CERT_PATH
+    if [ ! -d certificates ]
+    then
+    mkdir certificates
+    fi
+    echo "Generate Test CA Key"
+    openssl ecparam -out $IFX_CERT_KEY -name prime256v1 -genkey
+    echo "Generate Test CA Certificate"
+    openssl req -new -x509 -days 3650 -key $IFX_CERT_KEY -subj "/CN=Infineon OPTIGA(TM) Trust M Test CA/O=Infineon Technologies AG/OU=OPTIGA(TM)/C=DE" -out $IFX_CERT_PATH
 fi
 
 echo "Generated Test CA"

@@ -1,5 +1,4 @@
-# SPDX-FileCopyrightText: 2025 Infineon Technologies AG
-#
+# SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
 # SPDX-License-Identifier: MIT
 
 TRUSTM = external/optiga-trust-m
@@ -47,49 +46,54 @@ INCDIR := $(addprefix -I ,$(INCDIR))
 endif
 
 ifdef LIBDIR
-	ifdef PALDIR
-	        LIBSRC =  $(PALDIR)/pal.c	       
-	        ifeq ($(BUILD_FOR_ULTRA96), YES)
-	                 LIBSRC += $(PALDIR)/pal_gpio.c
-        	endif
-	        ifeq ($(USE_LIBGPIOD_RPI), YES)
-	                 LIBSRC += $(PALDIR)/pal_gpio_gpiod.c
-        	endif
-	        LIBSRC += $(PALDIR)/pal_i2c.c
-			LIBSRC += $(PALDIR)/pal_logger.c
-			LIBSRC += $(PALDIR)/pal_os_datastore.c
-	        LIBSRC += $(PALDIR)/pal_os_event.c
-        	LIBSRC += $(PALDIR)/pal_os_lock.c
-	        LIBSRC += $(PALDIR)/pal_os_timer.c
-	        LIBSRC += $(PALDIR)/pal_os_memory.c
-			LIBSRC += $(TRUSTM)/extras/pal/pal_crypt_mbedtls.c       	
-			LIBSRC += $(TRUSTM)/extras/pal/linux/pal_shared_mutex.c       	
-        	ifeq ($(USE_LIBGPIOD_RPI), YES)
-	                LIBSRC += $(PALDIR)/target/gpiod/pal_ifx_i2c_config.c
-        	endif
-	        ifeq ($(BUILD_FOR_ULTRA96), YES)
-                	LIBSRC += $(PALDIR)/target/ultra96/pal_ifx_i2c_config.c
-        	endif
-	endif
+    ifdef PALDIR
+        LIBSRC =  $(PALDIR)/pal.c
+        ifeq ($(BUILD_FOR_ULTRA96), YES)
+            LIBSRC += $(PALDIR)/pal_gpio.c
+        endif
+        ifeq ($(USE_LIBGPIOD_RPI), YES)
+            LIBSRC += $(PALDIR)/pal_gpio_gpiod.c
+        endif
+        LIBSRC += $(PALDIR)/pal_i2c.c
+        LIBSRC += $(PALDIR)/pal_logger.c
+        LIBSRC += $(PALDIR)/pal_os_datastore.c
+        LIBSRC += $(PALDIR)/pal_os_event.c
+        LIBSRC += $(PALDIR)/pal_os_lock.c
+        LIBSRC += $(PALDIR)/pal_os_timer.c
+        LIBSRC += $(PALDIR)/pal_os_memory.c
+        LIBSRC += $(TRUSTM)/extras/pal/pal_crypt_mbedtls.c
+        LIBSRC += $(TRUSTM)/extras/pal/linux/pal_shared_mutex.c
+        ifeq ($(USE_LIBGPIOD_RPI), YES)
+            LIBSRC += $(PALDIR)/target/gpiod/pal_ifx_i2c_config.c
+        endif
+        ifeq ($(BUILD_FOR_ULTRA96), YES)
+            LIBSRC += $(PALDIR)/target/ultra96/pal_ifx_i2c_config.c
+        endif
+    endif
 
-	LIBSRC += $(shell find $(LIBDIR) -name '*.c') 
-	LIBOBJ := $(patsubst %.c,%.o,$(LIBSRC))
-	LIB = libtrustm.so
+    LIBSRC += $(shell find $(LIBDIR) -name '*.c') 
+    LIBOBJ := $(patsubst %.c,%.o,$(LIBSRC))
+    LIB = libtrustm.so
 endif
 
 ifdef OTHDIR
-	OTHSRC := $(shell find $(OTHDIR) -name '*.c')
-	OTHOBJ := $(patsubst %.c,%.o,$(OTHSRC))
+    OTHSRC := $(shell find $(OTHDIR) -name '*.c')
+    OTHOBJ := $(patsubst %.c,%.o,$(OTHSRC))
 endif
 
 ifdef PROVDIR
-	PROVSRC := $(shell find $(PROVDIR) -name '*.c')
-	PROVOBJ := $(patsubst %.c,%.o,$(PROVSRC))
-	PROVIDER = trustm_provider.so
+    PROVSRC := $(shell find $(PROVDIR) -name '*.c')
+    PROVOBJ := $(patsubst %.c,%.o,$(PROVSRC))
+    PROVIDER = trustm_provider.so
 endif
 
 CC = gcc
 DEBUG = -g
+
+LIBGPIOD_VERSION := $(shell pkg-config --modversion libgpiod 2>/dev/null)
+ifeq ($(shell echo $(LIBGPIOD_VERSION) | cut -c1),1)
+  CFLAGS += -DLIBGPIOD_V1
+endif
 
 CFLAGS += -c
 ifeq ($(ARCH), arm64)
@@ -100,7 +104,7 @@ CFLAGS += $(INCDIR)
 CFLAGS += -Wall
 CFLAGS += -Wno-format
 ifeq ($(USE_LIBGPIOD_RPI), YES)
-	  CFLAGS += -DHAS_LIBGPIOD
+    CFLAGS += -DHAS_LIBGPIOD
 endif
 #CFLAGS += -DENGINE_DYNAMIC_SUPPORT
 CFLAGS += -DOPTIGA_COMMS_SET_RESET_SOFT
@@ -109,7 +113,7 @@ CFLAGS += -DMBEDTLS_USER_CONFIG_FILE=\"../../../external/optiga-trust-m/config/m
 LDFLAGS += -lpthread
 LDFLAGS += -lssl
 ifeq ($(USE_LIBGPIOD_RPI), YES)
-  LDFLAGS += -lgpiod
+    LDFLAGS += -lgpiod
 endif  
 LDFLAGS += -lcrypto
 LDFLAGS += -lrt
@@ -125,7 +129,6 @@ LDFLAGS_2 += -lcrypto
 .Phony : install uninstall all clean
 
 all : $(BINDIR)/$(LIB) $(APPS) $(BINDIR)/$(PROVIDER)
-
 
 install:
 	@echo "Create symbolic link to the openssl provider $(PROVIDER_INSTALL_DIR)/$(PROVIDER)"
@@ -170,4 +173,3 @@ $(BINDIR)/$(LIB): %: $(LIBOBJ) $(INCSRC)
 $(LIBOBJ): %.o: %.c $(INCSRC)
 	@echo "+++++++ Generating lib object: $< "
 	@$(CC) $(CFLAGS) $< -o $@
-

@@ -1,27 +1,31 @@
-[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-
-[![REUSE status](https://api.reuse.software/badge/github.com/infineon/optiga-trust-m-openssl)](https://api.reuse.software/info/github.com/infineon/optiga-trust-m-openssl)
+<!--
+SPDX-FileCopyrightText: Copyright (c) 2024-2026 Infineon Technologies AG
+SPDX-License-Identifier: CC-BY-4.0
+-->
 
 # Infineon OpenSSL Interface implementation for OPTIGA™ Trust M Host Library
+
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
+[![REUSE](https://github.com/Infineon/optiga-trust-m-openssl/actions/workflows/reuse-lint.yml/badge.svg?branch=main)](https://github.com/Infineon/optiga-trust-m-openssl/actions/workflows/reuse-lint.yml)
 
 - [Infineon OpenSSL Interface implementation for OPTIGA™ Trust M Host Library](#infineon-openssl-interface-implementation-for-optiga-trust-m-host-library)
   - [Prerequisites](#prerequisites)
   - [Getting Started](#getting-started)
     - [Getting the Code from GitHub](#getting-the-code-from-github)
     - [First time building the library](#first-time-building-the-library)
-  - [OPTIGA™ Trust V3 OpenSSL Provider usage](#optiga-trust-v3-openssl-provider-usage)
+  - [OPTIGA™ Trust V3 OpenSSL Provider usage](#provider_usage)
     - [rand](#rand)
     - [req](#req)
     - [pkey](#pkey)
       - [KeyGen with public key as output](#keygen-with-public-key-as-output)
-      - [KeyGen with Reference Keys in file format as output ](#keygen-with-reference-keys-in-file-format-as-output)
+      - [KeyGen with Reference Keys in file format as output](#keygen-with-reference-keys-in-file-format-as-output)
     - [pkeyutl](#pkeyutl)
       - [Sign using Labels with key id](#sign-using-labels-with-key-id)
-      - [Sign using Reference Keys in file format ](#sign-using-reference-keys-in-file-format)
+      - [Sign using Reference Keys in file format](#sign-using-reference-keys-in-file-format)
     - [Referencing keys in OPTIGA™ Trust M](#referencing-keys-in-optiga-trust-m)
     - [Testing TLS connection with ECC key](#test_tls_ecc)
-      - [Scenario where OPTIGA™ Trust M is on the client ](#test_tls_ecc_client)
-      - [Scenario where OPTIGA™ Trust M is on the server ](#test_tls_ecc_server)
+      - [Scenario where OPTIGA™ Trust M is on the client](#test_tls_ecc_client)
+      - [Scenario where OPTIGA™ Trust M is on the server](#test_tls_ecc_server)
       - [Testing TLS connection with ECC Reference key in file format](#test_tls_ecc_file)
       - [Testing Curl connection using ECC Reference key in file format](#test_curl_ecc_file)
     - [Testing TLS connection with RSA key](#test_tls_rsa)
@@ -37,117 +41,94 @@
 
 This tool was tested on the following hardware platforms and boards:
 
-* Raspberry PI 4  on Linux kernel >= 5.15
+- Raspberry PI 4  on Linux kernel >= 5.15
+- Micro SD card (≥16GB)
+- [OPTIGA™ Trust M MTR SHIELD](https://www.infineon.com/cms/en/product/evaluation-boards/trust-m-mtr-shield/) paired with [Pi Click Shield](https://www.mikroe.com/pi-4-click-shield)
+- [S2GO SECURITY OPTIGA™ Trust M](https://www.infineon.com/cms/en/product/evaluation-boards/s2go-security-optiga-m/)  paired with [Shield2Go Adapter for Raspberry Pi](https://www.infineon.com/cms/en/product/evaluation-boards/s2go-adapter-rasp-pi-iot/)
 
-* Micro SD card (≥16GB)
-
-* [OPTIGA™ Trust M MTR SHIELD](https://www.infineon.com/cms/en/product/evaluation-boards/trust-m-mtr-shield/) paired with [Pi Click Shield](https://www.mikroe.com/pi-4-click-shield) 
-
-* [S2GO SECURITY OPTIGA™ Trust M](https://www.infineon.com/cms/en/product/evaluation-boards/s2go-security-optiga-m/)  paired with [Shield2Go Adapter for Raspberry Pi](https://www.infineon.com/cms/en/product/evaluation-boards/s2go-adapter-rasp-pi-iot/)
-
-  
-
-  Note: OPTIGA™ Trust M Provider was tested on Linux raspberrypi 6.6.51+rpt-rpi-v8 aarch64 with OpenSSL 3.0.17 pre-installed
+> *Note: OPTIGA™ Trust M Provider was tested on Linux raspberrypi 6.6.51+rpt-rpi-v8 aarch64 with OpenSSL 3.0.17 pre-installed.*
 
 **Hardware connection:**
 
 **I2C Connection**: Below table shows the I2C connection between the [OPTIGA™ Trust M](https://www.infineon.com/cms/en/product/evaluation-boards/trust-m-mtr-shield/) and Raspberry Pi(RPI).
 
 |  No  | Description | RPI Pin # | Pin Description |
-  | :--: | :---------: | :-------: | :-------------: |
-  |  1   |   I2C SCL   |     5     |    SCL1, I2C    |
-  |  2   |   I2C SDA   |     3     |    SDA1, I2C    |
-  |  3   |     VCC     |    17     |       3V3       |
-  |  4   |     GND     |     9     |       GND       |
+| :--: | :---------: | :-------: | :-------------: |
+|  1   |   I2C SCL   |     5     |    SCL1, I2C    |
+|  2   |   I2C SDA   |     3     |    SDA1, I2C    |
+|  3   |     VCC     |    17     |       3V3       |
+|  4   |     GND     |     9     |       GND       |
 
-![](/data/images/rpi_mikro_connection.png)
+![rpi_mikro_connection](docs/images/rpi_mikro_connection.png)
 
-​       Figure 1 Hardware Setup for OPTIGA™ Trust M MTR SHIELD using Pi Click Shield
+Figure 1: Hardware Setup for OPTIGA™ Trust M MTR SHIELD using Pi Click Shield
 
-![](data/images/HardwareSetup.png)
+![HardwareSetup](docs/images/HardwareSetup.png)
 
-​	Figure 2 Hardware Setup for S2GO SECURITY OPTIGA™ Trust M using Shield2Go Adapter
-
-
+Figure 2: Hardware Setup for S2GO SECURITY OPTIGA™ Trust M using Shield2Go Adapter
 
 ## <a name="getting_started"></a>Getting Started
 
 ### <a name="getting_code"></a>Getting the Code from GitHub
 
-Getting the initial code from GitHub with submodules 
+Getting the initial code from GitHub with submodules
 
-
-```
-git clone --recurse-submodules https://github.com/Infineon/optiga-trust-m-openssl.git 
+```bash
+git clone --recurse-submodules https://github.com/Infineon/optiga-trust-m-openssl.git
 ```
 
 ### <a name="build_lib"></a>First time building the library
-Run the commands below in sequence to install the required dependencies and the OPTIGA™ Trust M provider. 
 
-    cd optiga-trust-m-openssl
-    ./trustm_installation_script.sh
+Run the commands below in sequence to install the required dependencies and the OPTIGA™ Trust M provider.
 
-Note: 
+```bash
+cd optiga-trust-m-openssl
+./trustm_installation_script.sh
+```
 
-Enable I2C interface for Raspberry Pi to communicate with OPTIGA™ Trust M
+> *Note: Enable I2C interface for Raspberry Pi to communicate with OPTIGA™ Trust M.*
 
 ## <a name="provider_usage"></a>OPTIGA™ Trust M OpenSSL Provider usage
 
 ### <a name="rand"></a>rand
 
-Usage : Random number generation
+Usage: Random number generation
 Example
 
-```console 
+```bash
 openssl rand -provider trustm_provider -base64 32
 ```
-*Note :* 
-*If OPTIGA™ Trust M random number generation fails, there will still be random number output.* 
-*This is controlled by OpenSSL provider do not have control over it.*
+
+> *Note: If OPTIGA™ Trust M random number generation fails, there will still be
+> random number output. This is controlled by OpenSSL provider do not have
+> control over it.*
 
 ### <a name="req"></a>req
-Usage : Certificate request / self signed cert / key generation
 
-OPTIGA™ Trust M provider uses the -key parameter to pass input to the key generation/usage function.
+Usage: Certificate request / self signed cert / key generation
+
+OPTIGA™ Trust M provider uses the *key* parameter to pass input to the key generation/usage function.
 
 Following is the input format:
-
--key **OID** : **public key input** : **NEW** :**key size** : **key usage**
-
-where :
+> key **OID** : **public key input** : **NEW** :**key size** : **key usage**
 
 - **OID** for OPTIGA™ Trust M key
-
   - if OID 0xE0F0 is used no other input is needed
 - **public key input**
-
   - public key file name in PEM format
-
   - \* = no public input
-
   - ^ = public key store in Application OID Key
-
     - 0xE0F1 store in 0xF1D1,
-
     - 0xE0F2 store in 0xF1D2,
-
     - 0xE0F3 store in 0xF1D3,
-
     - 0xE0FC store in 0xF1E0,
-
     - 0xE0FD store in 0xF1E1
-
-      Note: For ECC521/BRAINPOOL512, the public key store in Application OID list as below:
-
+      > *Note: For ECC521/BRAINPOOL512, the public key store in Application OID list as below:*
     - 0xE0F1 store in 0xF1E0,
-
     - 0xE0F2 store in 0xF1E1
-  
 - **NEW**
-
   - Generate new key pair in OPTIGA™ Trust M
 - **key size**
-
   - ECC
     - 0x03 = 256 key length  for NIST  256
     - 0x04 = 384 key length  for NIST  384
@@ -158,28 +139,27 @@ where :
   - RSA
     - 0x41 = 1024 key length
     - 0x42 = 2048 key length
-- **Key usage** 
-
-  - Auth : 0x01 
-  - Enc : 0x02 
-  - HFWU : 0x04 
-  - DevM : 0X08 
-  - Sign : 0x10 
+- **Key usage**
+  - Auth : 0x01
+  - Enc : 0x02
+  - HFWU : 0x04
+  - DevM : 0X08
+  - Sign : 0x10
   - Agmt : 0x20
 
-*Note: If wrong public is submitted the certificate generation will still go through but verification will fail.*
+> *Note: If wrong public is submitted the certificate generation will still go through but verification will fail.*
 
 Example : Generating a certificate request using OID 0xE0F3 with new key generated, ECC 384 key length and Auth/Enc/Sign usage. Verify that public key match the private key in the OID.
 
-```console 
+```bash
 openssl req -provider trustm_provider -key 0xe0f3:*:NEW:0x04:0x13 -new -out test_e0f3.csr -verify
 ```
-*Note:*
-*If wrong public key is used or no public key is submitted, the certificate generation will still* 
-*go through but verification will fail. Public key input only in PEM*
+
+> *Note: If wrong public key is used or no public key is submitted, the certificate generation will still go through but verification will fail. Public key input only in PEM format is supported.*
 
 ### <a name="pkey"></a>pkey
-Usage : Key generation
+
+Usage: Key generation
 
 OPTIGA™ Trust M provider uses the -in parameter to pass input to the key generation function.
 
@@ -189,13 +169,13 @@ Following is the input format:
 
 (see [req](#req) for input details)
 
-There are two ways to generate New ECC/RSA Key Pair. 
+There are two ways to generate New ECC/RSA Key Pair.
 
-#### KeyGen with public key as output 
+#### KeyGen with public key as output
 
 Example: To generate keypair with public key as output and private key stored inside OPTIGA™ Trust M:
 
-```console 
+```bash
 openssl pkey -provider trustm_provider -in 0xe0f1:*:NEW:0x03:0x13 -pubout -out e0f1_pub.pem
 ```
 
@@ -205,14 +185,15 @@ The above command will generate one ECC 256 keypair in OPTIGA™ Trust M. The ou
 
 Example: To generate reference keys in file format for ECC 256:
 
-```console 
+```bash
 openssl pkey -provider trustm_provider -provider default -propquery provider=trustm -in 0xe0f1:*:NEW:0x03:0x13 -out ecc256_key.pem
 ```
 
 The above command will generate one ECC 256 keypair in OPTIGA™ Trust M. The private key id and  public key of OPTIGA™ Trust M are stored inside the output file (ecc256_key.pem). Refer to  [Referencing keys in OPTIGA™ Trust M](#referencing-keys-in-optiga-trust-m)  Section for more details.
 
 ### <a name="pkeyutl"></a>pkeyutl
-Usage : Sign and verify
+
+Usage: Sign and verify
 
 #### Sign using Labels with key id
 
@@ -220,13 +201,13 @@ Example for signing using Labels with key id.
 
 Signing the message in the test_sign.txt file using the OPTIGA™ Trust M ECC key and saving the generated signature in the test_sign.sig file.
 
-```console 
+```bash
 openssl pkeyutl -provider trustm_provider -inkey 0xe0f1:^  -sign -rawin -in test_sign.txt -out test_sign.sig
 ```
 
 Verifying the signature of the raw input data in test_sign.txt using the provided public key in eofd_pub.pem and the signature in test_sign.sig
 
-```console 
+```bash
 openssl pkeyutl -verify -pubin -inkey e0f1_pub.pem -rawin -in test_sign.txt -sigfile test_sign.sig
 ```
 
@@ -238,13 +219,13 @@ Example for Signing using Reference Keys in file format.
 
 Signing the message in the test_sign.txt file using Reference Keys in file format and saving the generated signature in the test_sign.sig file.
 
-```console 
+```bash
 openssl pkeyutl -provider trustm_provider -provider default -sign -rawin -inkey ecc256_key.pem -in test_sign.txt -out test_sign.sig
 ```
 
 Verifying the signature of the raw input data in test_sign.txt using the provided public key in eofd_pub.pem and the signature in test_sign.sig
 
-```console 
+```bash
 openssl pkeyutl -verify -pubin -inkey e0fd_pub.pem -rawin -in test_sign.txt -sigfile test_sign.sig
 ```
 
@@ -273,17 +254,18 @@ The solution is to populate the OpenSSL Key data structure with only a reference
 
 OpenSSL crypto APIs are then invoked with these data structure objects as parameters. When the crypto API is routed to the provider, the Trust M provider implementation decodes these key references and invokes the secure element APIs with correct key references for a cryptographic operation. If the input key is not a reference key, execution will roll back to OpenSSL software implementation.
 
-``NOTE: When using this method, the Trust M provider has to be loaded first. This will ensure that Trust M provider can decode the key id information present in the reference key.``
-
+> *Note: When using this method, the Trust M provider has to be loaded first.
+> This will ensure that Trust M provider can decode the key id information
+> present in the reference key.*
 
 #### EC Reference Key Format
 
 The following provides an example of an EC reference key. The value reserved
 for the private key has been used to contain:
 
--  a 16 bit key identifier (in the example below ``0xe0f1``)
+- a 16 bit key identifier (in the example below ``0xe0f1``)
 
-```console
+```text
 Private-Key: (256 bit)
 priv:
     e0:f1:00:00:00:00:00:00:00:00:00:00:00:00:00:
@@ -302,18 +284,16 @@ NIST CURVE: P-256
 - Ensure the value reserved for public key and ASN1 OID contain the values
   matching the stored key.
 
----
-
 #### RSA Reference Key Format
 
 The following provides an example of an RSA reference key.
 
--  The value reserved for 'p' ('prime1') is used as a magic number and is
+- The value reserved for 'p' ('prime1') is used as a magic number and is
    set to '1'
--  The value reserved for 'q' ('prime2') is used to store the 16 bit key
+- The value reserved for 'q' ('prime2') is used to store the 16 bit key
    identifier (in the example below 0xe0fc)
 
-```console
+```text
 Private-Key: (2047 bit, 2 primes)
 modulus:
     47:ee:f4:a5:fc:63:d5:93:04:21:c0:86:eb:09:b0:
@@ -343,8 +323,6 @@ exponent2: 0
 coefficient: 0
 ```
 
----
-
 - Ensure key length, the value reserved for (private key) modulus and
   public exponent match the stored key.
 - Setting prime1 to '1' makes it impossible that a normal private key
@@ -354,20 +332,20 @@ coefficient: 0
 
 ### <a name="test_tls_ecc"></a>Testing TLS connection with ECC key
 
-#### <a name="test_tls_ecc_client"></a>Scenario where OPTIGA™ Trust M is on the client :
+#### <a name="test_tls_ecc_client"></a>Scenario where OPTIGA™ Trust M is on the client
 
-*Note : To generate a test server certificate refer to [Generating a Test Server Certificate](#test_Server_cert)*  or refer below
+> *Note: To generate a test server certificate refer to [Generating a Test Server Certificate](#test_server_cert)  or refer below.*
 
 Generate Server ECC Private Key on Trust M
 
-```
+```bash
 openssl ecparam -out server1_privkey.pem \
 -name prime256v1 -genkey
 ```
 
-Generate CSR for Server 
+Generate CSR for Server
 
-```
+```bash
 openssl req -new -key server1_privkey.pem \
 -subj "/C=SG/CN=Server1/O=Infineon" \
 -out server1.csr
@@ -375,7 +353,7 @@ openssl req -new -key server1_privkey.pem \
 
 Generate Server certificate using CA
 
-```
+```bash
 openssl x509 -req -in server1.csr \
 -CA scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA.pem \
 -CAkey scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA_Key.pem \
@@ -387,7 +365,7 @@ openssl x509 -req -in server1.csr \
 
 Create new ECC 256 key length and Auth/Enc/Sign usage and generate a certificate request for OPTIGA™ Trust M key 0xE0F1
 
-```console
+```bash
 openssl req -provider trustm_provider \
 -key 0xe0f1:*:NEW:0x03:0x13 \
 -new -out test_e0f1.csr \
@@ -396,7 +374,7 @@ openssl req -provider trustm_provider \
 
 Extract the public key from certificate request for OPTIGA™ Trust M key 0xE0F1
 
-```
+```bash
 openssl req -in client1_e0f1.csr \
 -pubkey -noout \
 -out client1_e0f1.pub
@@ -404,9 +382,9 @@ openssl req -in client1_e0f1.csr \
 
 Issue the certificate with keyUsage=digitalSignature,keyEncipherment on the client side with OPTIGA_Trust_M_Infineon_Test_CA.
 
-*Note : Refer to [Generating a Test Server Certificate](#test_Server_cert)  for openssl.cnf*
+> *Note: Refer to [Generating a Test Server Certificate](#test_server_cert) for openssl.cnf*
 
-```console
+```bash
 openssl x509 -req -in test_e0f1.csr \
 -CA scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA.pem \
 -CAkey scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA_Key.pem \
@@ -414,12 +392,11 @@ openssl x509 -req -in test_e0f1.csr \
 -out test_e0f1.crt \
 -days 365 \
 -sha256
-
 ```
 
-Running the test server : 
+Running the test server :
 
-```console
+```bash
 lxterminal -e openssl s_server \
 -cert server1.crt \
 -key privkey.pem \
@@ -427,12 +404,11 @@ lxterminal -e openssl s_server \
 -verify_return_error \
 -Verify 1 \
 -CAfile scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA.pem
-
 ```
 
-Running the test client : *(open a new console)* 
+Running the test client *(open a new console)*:
 
-```console
+```bash
 lxterminal -e openssl s_client \
 -connect localhost:5000 \
 -servername Server1 \
@@ -441,14 +417,13 @@ lxterminal -e openssl s_client \
 -cert test_e0f1.crt \
 -key 0xe0f1:^ \
 -CAfile scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA.pem
-
 ```
 
-#### <a name="test_tls_ecc_server"></a>Scenario where OPTIGA™ Trust M is on the server :
+#### <a name="test_tls_ecc_server"></a>Scenario where OPTIGA™ Trust M is on the server
 
 Create new ECC 256 key length and Auth/Enc/Sign usage and generate a certificate request for OPTIGA™ Trust M key 0xE0F2
 
-```console
+```bash
 openssl req -provider trustm_provider \
 -key 0xe0f2:*:NEW:0x03:0x13 -new \
 -out test_e0f2.csr \
@@ -457,7 +432,7 @@ openssl req -provider trustm_provider \
 
 Extract Public Key from certificate request for OPTIGA™ Trust M key 0xE0F2
 
-```
+```bash
 openssl req -in test_e0f2.csr \
 -pubkey -noout \
 -out test_e0f2.pub
@@ -465,7 +440,7 @@ openssl req -in test_e0f2.csr \
 
 Issue the certificate with keyUsage=keyCertSign, cRLSign, digitalSignature on the server side with OPTIGA_Trust_M_Infineon_Test_CA.
 
-```console
+```bash
 openssl x509 -req -in test_e0f2.csr \
 -CA scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA.pem \
 -CAkey scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA_Key.pem \
@@ -479,14 +454,14 @@ openssl x509 -req -in test_e0f2.csr \
 
 Generate Client ECC Private Key
 
-```
+```bash
 openssl ecparam -out privkey.pem \
 -name prime256v1 -genkey
 ```
 
 Generate Client CSR
 
-```
+```bash
 openssl req -new \
 -key privkey.pem \
 -subj "/C=SG/CN=Server1/O=Infineon" \
@@ -495,7 +470,7 @@ openssl req -new \
 
 Generate Client certificate using CA
 
-```
+```bash
 openssl x509 -req -in client.csr \
 -CA scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA.pem \
 -CAkey $CERT_PATH/OPTIGA_Trust_M_Infineon_Test_CA_Key.pem \
@@ -504,9 +479,9 @@ openssl x509 -req -in client.csr \
 -sha256
 ```
 
-Running the test server : 
+Running the test server:
 
-```console
+```bash
 lxterminal -e openssl s_server \
 -cert test_e0f2.crt \
 -provider trustm_provider -provider default \
@@ -515,19 +490,17 @@ lxterminal -e openssl s_server \
 -verify_return_error \
 -Verify 1 \
 -CAfile scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA.pem
-
 ```
 
-Running the test client : *(open a new console)* 
+Running the test client *(open a new console)*:
 
-```console
+```bash
 lxterminal -e openssl s_client \
 -connect localhost:5000 \
 -servername Server1 \
 -cert client.crt \
 -key privkey.pem \
 -CAfile scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA.pem
-
 ```
 
 #### <a name="test_tls_ecc_file"></a>Testing TLS connection with ECC Reference key in file format
@@ -540,13 +513,13 @@ Please refer to  [trustm_curl_test](./examples/scripts/trustm_curl_test/) for de
 
 ### <a name="test_tls_rsa"></a>Testing TLS connection with RSA key
 
-#### <a name="test_tls_rsa_client"></a>Scenario where OPTIGA™ Trust M is on the client :
+#### <a name="test_tls_rsa_client"></a>Scenario where OPTIGA™ Trust M is on the client
 
-*Note : To generate a test server certificate refer to [Generating a Test Server Certificate](#test_server_cert)* 
+>*Note: To generate a test server certificate refer to [Generating a Test Server Certificate](#test_server_cert)*
 
 Creates new RSA 2048 key length and Auth/Enc/Sign usage and generate a certificate  request for OPTIGA™ Trust M key 0xE0FC
 
-```console
+```bash
 openssl req -provider trustm_provider \
 -key 0xe0fd:*:NEW:0x42:0x13 \
 -new \
@@ -556,9 +529,9 @@ openssl req -provider trustm_provider \
 
 Issue the certificate with keyUsage=digitalSignature,keyEncipherment on the client side with OPTIGA_Trust_M_Infineon_Test_CA.
 
-**Note : Refer to [Generating a Test Server Certificate](#test_server_cert)  for openssl.cnf**
+> *Note: Refer to [Generating a Test Server Certificate](#test_server_cert)  for openssl.cnf*
 
-```console
+```bash
 openssl x509 -req -in test_e0fd.csr \
 -CA scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA.pem \
 -CAkey scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA_Key.pem \
@@ -570,9 +543,9 @@ openssl x509 -req -in test_e0fd.csr \
 -extensions cert_ext1
 ```
 
-Running the test server : 
+Running the test server:
 
-```console
+```bash
 openssl s_server \
 -cert test_opensslserver.crt \
 -key privkey.pem -accept 5000 \
@@ -582,9 +555,9 @@ openssl s_server \
 -sigalgs RSA+SHA256
 ```
 
-Running the test client : *(open a new console)* 
+Running the test client *(open a new console)*:
 
-```console
+```bash
 openssl s_client -provider trustm_provider -provider default \
 -client_sigalgs RSA+SHA256 \
 -cert test_e0fd.crt \
@@ -592,20 +565,20 @@ openssl s_client -provider trustm_provider -provider default \
 -connect localhost:5000 \
 -tls1_2 \
 -CAfile scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA.pem \
--verify 1 
+-verify 1
 ```
 
-#### <a name="test_tls_rsa_server"></a>Scenario where OPTIGA™ Trust M is on the server :
+#### <a name="test_tls_rsa_server"></a>Scenario where OPTIGA™ Trust M is on the server
 
 Creates new RSA 2048 key length and Auth/Enc/Sign usage and generate a certificate  request for OPTIGA™ Trust M key 0xE0FD
 
-```console
+```bash
 openssl req -provider trustm_provider -key 0xe0fc:*:NEW:0x42:0x13 -new -subj "/C=SG/CN=TrustM/O=Infineon" -out test_e0fc.csr
 ```
 
 Issue the certificate with keyUsage=keyCertSign, cRLSign, digitalSignature on the server side with OPTIGA_Trust_M_Infineon_Test_CA.
 
-```console
+```bash
 openssl x509 -req -in test_e0fc.csr -CA  scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA.pem \
 -CAkey scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA_Key.pem \
 -CAcreateserial \
@@ -616,21 +589,21 @@ openssl x509 -req -in test_e0fc.csr -CA  scripts/certificates/OPTIGA_Trust_M_Inf
 -extensions cert_ext2
 ```
 
-Running the test server : 
+Running the test server:
 
-```console
+```bash
 openssl s_server -provider trustm_provider -provider default \
 -cert test_e0fc.crt \
 -key 0xe0fc:^ \
 -accept 5000 \
 -verify_return_error \
 -CAfile scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA.pem \
--sigalgs RSA+SHA256 
+-sigalgs RSA+SHA256
 ```
 
-Running the test client : *(open a new console)* 
+Running the test client *(open a new console)*:
 
-```console
+```bash
 openssl s_client \
 -CAfile scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA.pem \
 -connect localhost:5000 -tls1_2
@@ -641,19 +614,19 @@ openssl s_client \
 
 Generate a new key pair and certificate request using OpenSSL command:
 
-```console
+```bash
 openssl req -new -nodes -subj "/C=SG/O=Infineon" -out test_opensslserver.csr
 ```
 
 Creates the openssl.cnf with the below contain:
 
-```console
-cat openssl.cnf 
+```bash
+cat openssl.cnf
 ```
 
 Creates and displays the openssl.cnf as shown below:
 
-```console
+```bash
 [ cert_ext ]
 subjectKeyIdentifier=hash
 keyUsage=critical,digitalSignature,keyEncipherment
@@ -671,7 +644,7 @@ keyUsage=keyCertSign, cRLSign, digitalSignature
 
 Issue the certificate with keyUsage=keyCertSign, cRLSign, digitalSignature on the server side with OPTIGA_Trust_M_Infineon_Test_CA.
 
-```console
+```bash
 openssl x509 -req -in test_opensslserver.csr \
 -CA scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA.pem \
 -CAkey scripts/certificates/OPTIGA_Trust_M_Infineon_Test_CA_Key.pem \
@@ -682,8 +655,6 @@ openssl x509 -req -in test_opensslserver.csr \
 -extfile openssl.cnf \
 -extensions cert_ext2
 ```
-
-
 
 ### <a name="issue_cert"></a>Using OPTIGA™ Trust M OpenSSL provider to sign and issue certificate
 
@@ -700,7 +671,7 @@ Create OPTIGA™ Trust M CA key pair with the following parameters:
   - Common Name : UID of Trust M
   - expiry days : ~10 years
 
-```console
+```bash
 openssl req -provider trustm_provider -provider default \
 -key 0xe0f2:^:NEW:0x03:0x13 \
 -new \
@@ -720,7 +691,7 @@ or
 
 Use the following command to generate an Elliptic Curve Cryptography (ECC) keypair.
 
-```
+```bash
 openssl ecparam \
 -out dev_privkey.pem \
 -name prime256v1 \
@@ -729,7 +700,7 @@ openssl ecparam \
 
 Following command generates a CSR, which is a request to a Certificate Authority (CA) to sign the public key along with the information provided. The CSR contains the public key from the private key file and the subject information.
 
-```
+```bash
 openssl req -new \
 -key dev_privkey.pem \
 -subj /CN=TrustM_Dev1/O=Infineon/C=SG \
@@ -749,9 +720,9 @@ Following demonstrate how you can issue and sign certificate with OPTIGA™ Trus
 - using extension cert_ext in extension file
 - expiry days : 1 year
 
-*Note : Refer to [Generating a Test Server Certificate](#test_Server_cert)  for openssl.cnf*
+> *Note: Refer to [Generating a Test Server Certificate](#test_server_cert)  for openssl.cnf*
 
-```console
+```bash
 openssl ca -batch -create_serial \
 -provider trustm_provider -provider default \
 -keyfile 0xe0f2:^ \
@@ -762,3 +733,26 @@ openssl ca -batch -create_serial \
 -config openssl.cnf \
 -md sha256
 ```
+
+## Additional information
+
+### Contact
+
+In case of questions regarding this repository and its contents, refer to [MAINTAINERS.md](MAINTAINERS.md) for the contact details of this project's maintainers.
+
+### Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for detailed contribution instructions and refer to our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
+### Licensing
+
+Please see our [LICENSE](LICENSE) for copyright and license information.
+
+This project follows the [REUSE](https://reuse.software/) approach, so copyright and licensing
+information is available for every file (including third party components) either in the file
+header, an individual *.license file or the [REUSE.toml](REUSE.toml) file. All licenses can be found in the
+[LICENSES](LICENSES) folder.
+
+### Related resources
+
+- [OPTIGA™ Trust M Overview Repository](https://github.com/Infineon/optiga-trust-m-overview)

@@ -1,8 +1,6 @@
-/*
- * SPDX-FileCopyrightText: 2025 Infineon Technologies AG
- *
- * SPDX-License-Identifier: MIT
- */
+// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-License-Identifier: MIT
+
 #include <openssl/core_dispatch.h>
 #include <openssl/core_names.h>
 #include <openssl/params.h>
@@ -87,8 +85,9 @@ static int rsa_asymcipher_encrypt(
     TRUSTM_PROVIDER_DBGFN(">");
     TRUSTM_PROVIDER_SSL_MUTEX_ACQUIRE
 
-    public_key_from_host.public_key = (uint8_t *)(trustm_rsa_asymcipher_ctx->trustm_rsa_key->public_key +  
-                                                trustm_rsa_asymcipher_ctx->trustm_rsa_key->public_key_header_length);
+    public_key_from_host.public_key =
+        (uint8_t *)(trustm_rsa_asymcipher_ctx->trustm_rsa_key->public_key
+                    + trustm_rsa_asymcipher_ctx->trustm_rsa_key->public_key_header_length);
     public_key_from_host.length =
         (trustm_rsa_asymcipher_ctx->trustm_rsa_key->public_key_length)
         - (trustm_rsa_asymcipher_ctx->trustm_rsa_key->public_key_header_length);
@@ -269,7 +268,8 @@ static int rsa_asymcipher_set_ctx_params(void *ctx, const OSSL_PARAM params[]) {
 static const OSSL_PARAM *rsa_asymcipher_settable_ctx_params(void *ctx, void *provctx) {
     static const OSSL_PARAM known_settable_ctx_params[] = {
         OSSL_PARAM_utf8_string(OSSL_ASYM_CIPHER_PARAM_PAD_MODE, NULL, 0),
-        OSSL_PARAM_END};
+        OSSL_PARAM_END
+    };
 
     return known_settable_ctx_params;
 }
@@ -283,4 +283,5 @@ const OSSL_DISPATCH trustm_rsa_asymcipher_functions[] = {
     {OSSL_FUNC_ASYM_CIPHER_FREECTX, (void (*)(void))rsa_asymcipher_freectx},
     {OSSL_FUNC_ASYM_CIPHER_SET_CTX_PARAMS, (void (*)(void))rsa_asymcipher_set_ctx_params},
     {OSSL_FUNC_ASYM_CIPHER_SETTABLE_CTX_PARAMS, (void (*)(void))rsa_asymcipher_settable_ctx_params},
-    {0, NULL}};
+    {0, NULL}
+};

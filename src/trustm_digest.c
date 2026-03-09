@@ -1,8 +1,5 @@
-/*
- * SPDX-FileCopyrightText: 2025 Infineon Technologies AG
- *
- * SPDX-License-Identifier: MIT
- */
+// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-License-Identifier: MIT
 
 #include <openssl/core_dispatch.h>
 #include <openssl/core_names.h>
@@ -263,7 +260,8 @@ static const OSSL_PARAM *trustm_digest_gettable_params(void *provctx) {
     static const OSSL_PARAM known_gettable_params[] = {
         OSSL_PARAM_size_t(OSSL_DIGEST_PARAM_BLOCK_SIZE, NULL),
         OSSL_PARAM_size_t(OSSL_DIGEST_PARAM_SIZE, NULL),
-        OSSL_PARAM_END};
+        OSSL_PARAM_END
+    };
     return known_gettable_params;
 }
 
@@ -293,4 +291,5 @@ const OSSL_DISPATCH trustm_digest_functions[] = {
     {OSSL_FUNC_DIGEST_FINAL, (void (*)(void))trustm_digest_final},
     {OSSL_FUNC_DIGEST_GETTABLE_PARAMS, (void (*)(void))trustm_digest_gettable_params},
     {OSSL_FUNC_DIGEST_GET_PARAMS, (void (*)(void))trustm_digest_get_params},
-    {0, NULL}};
+    {0, NULL}
+};

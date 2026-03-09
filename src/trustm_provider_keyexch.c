@@ -1,8 +1,5 @@
-/*
- * SPDX-FileCopyrightText: 2025 Infineon Technologies AG
- *
- * SPDX-License-Identifier: MIT
- */
+// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-License-Identifier: MIT
 
 #include <openssl/core_dispatch.h>
 #include <openssl/core_names.h>
@@ -171,7 +168,8 @@ static int trustm_keyexch_derive_kdf(
         || trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_256R1)
         shared_secret_length = 32;
 
-    else if (trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_NIST_P_384 || trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_384R1)
+    else if (trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_NIST_P_384
+             || trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_384R1)
         shared_secret_length = 48;
 
     else if (trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_512R1)
@@ -268,7 +266,8 @@ static int trustm_keyexch_derive_plain(
         || trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_256R1)
         shared_secret_length = 32;
 
-    else if (trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_NIST_P_384 || trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_384R1)
+    else if (trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_NIST_P_384
+             || trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_384R1)
         shared_secret_length = 48;
 
     else if (trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_512R1)
@@ -396,7 +395,8 @@ static const OSSL_PARAM *trustm_keyexch_settable_ctx_params(void *ctx, void *pro
         OSSL_PARAM_utf8_string(OSSL_EXCHANGE_PARAM_KDF_DIGEST_PROPS, NULL, 0),
         OSSL_PARAM_size_t(OSSL_EXCHANGE_PARAM_KDF_OUTLEN, NULL),
         OSSL_PARAM_octet_string(OSSL_EXCHANGE_PARAM_KDF_UKM, NULL, 0),
-        OSSL_PARAM_END};
+        OSSL_PARAM_END
+    };
 
     return settable;
 }
@@ -409,4 +409,5 @@ const OSSL_DISPATCH trustm_ecdh_keyexch_functions[] = {
     {OSSL_FUNC_KEYEXCH_FREECTX, (void (*)(void))trustm_keyexch_freectx},
     {OSSL_FUNC_KEYEXCH_SET_CTX_PARAMS, (void (*)(void))trustm_keyexch_set_ctx_params},
     {OSSL_FUNC_KEYEXCH_SETTABLE_CTX_PARAMS, (void (*)(void))trustm_keyexch_settable_ctx_params},
-    {0, NULL}};
+    {0, NULL}
+};

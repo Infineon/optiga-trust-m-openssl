@@ -1,14 +1,13 @@
 #!/usr/bin/env sh
 
-# SPDX-FileCopyrightText: 2025 Infineon Technologies AG
-#
+# SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
 # SPDX-License-Identifier: MIT
 
 set -eu
 
 . ${PWD}/config.sh
 
-echo "[*] Server1 (without Trust M):"
+echo "[*] Server1 (without Trust-M):"
 openssl ecparam -name prime256v1 -genkey -noout -out ${SERVER_FILE}.key
 openssl req -new -key ${SERVER_FILE}.key -config server.cnf -out ${SERVER_FILE}.csr
 openssl x509 -req -in ${SERVER_FILE}.csr -CA $CERT_PATH/ca.cert.pem -CAkey $CERT_PATH/ca.key -CAcreateserial -out ${SERVER_FILE}.crt -days 365 -sha256 -extfile server.cnf -extensions req_ext

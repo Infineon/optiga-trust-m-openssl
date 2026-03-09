@@ -1,8 +1,5 @@
-/*
- * SPDX-FileCopyrightText: 2025 Infineon Technologies AG
- *
- * SPDX-License-Identifier: MIT
- */
+// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-License-Identifier: MIT
 
 #include "trustm_helper.h"
 
@@ -627,15 +624,15 @@ optiga_lib_status_t trustmReadMetadata(uint16_t optiga_oid, trustm_metadata_t *o
                             break;
                         case 0xC4:
                             if (read_data_buffer[i + 1] == 2)
-                                oidMetadata->C4_maxSize = (uint16_t
-                                )((read_data_buffer[i + 2] << 8) + read_data_buffer[i + 3]);
+                                oidMetadata->C4_maxSize = (uint16_t)((read_data_buffer[i + 2] << 8)
+                                                                     + read_data_buffer[i + 3]);
                             else
                                 oidMetadata->C4_maxSize = (uint16_t)read_data_buffer[i + 2];
                             break;
                         case 0xC5:
                             if (read_data_buffer[i + 1] == 2)
-                                oidMetadata->C5_used = (uint16_t
-                                )((read_data_buffer[i + 2] << 8) + read_data_buffer[i + 3]);
+                                oidMetadata->C5_used = (uint16_t)((read_data_buffer[i + 2] << 8)
+                                                                  + read_data_buffer[i + 3]);
                             else
                                 oidMetadata->C5_used = (uint16_t)read_data_buffer[i + 2];
                             break;
@@ -730,15 +727,15 @@ optiga_lib_status_t trustmProviderReadMetadata(
                             break;
                         case 0xC4:
                             if (read_data_buffer[i + 1] == 2)
-                                oidMetadata->C4_maxSize = (uint16_t
-                                )((read_data_buffer[i + 2] << 8) + read_data_buffer[i + 3]);
+                                oidMetadata->C4_maxSize = (uint16_t)((read_data_buffer[i + 2] << 8)
+                                                                     + read_data_buffer[i + 3]);
                             else
                                 oidMetadata->C4_maxSize = (uint16_t)read_data_buffer[i + 2];
                             break;
                         case 0xC5:
                             if (read_data_buffer[i + 1] == 2)
-                                oidMetadata->C5_used = (uint16_t
-                                )((read_data_buffer[i + 2] << 8) + read_data_buffer[i + 3]);
+                                oidMetadata->C5_used = (uint16_t)((read_data_buffer[i + 2] << 8)
+                                                                  + read_data_buffer[i + 3]);
                             else
                                 oidMetadata->C5_used = (uint16_t)read_data_buffer[i + 2];
                             break;

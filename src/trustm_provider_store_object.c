@@ -1,8 +1,5 @@
-/*
- * SPDX-FileCopyrightText: 2025 Infineon Technologies AG
- *
- * SPDX-License-Identifier: MIT
- */
+// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-License-Identifier: MIT
 
 #include <openssl/core_dispatch.h>
 #include <openssl/core_names.h>
@@ -226,7 +223,8 @@ static int trustm_genpkey_rsa(trustm_object_ctx_t *trustm_object_ctx) {
         0x01,
         0x01,
         0x05,
-        0x00};
+        0x00
+    };
 
     uint8_t rsaheader1024[] = {
         0x30,
@@ -246,7 +244,8 @@ static int trustm_genpkey_rsa(trustm_object_ctx_t *trustm_object_ctx) {
         0x01,
         0x01,
         0x05,
-        0x00};
+        0x00
+    };
     TRUSTM_PROVIDER_DBGFN(">");
     TRUSTM_PROVIDER_SSL_MUTEX_ACQUIRE
     trustm_object_ctx->me_crypt = me_crypt;
@@ -362,7 +361,8 @@ static int trustm_object_load_pkey_rsa(
         0x01,
         0x01,
         0x05,
-        0x00};
+        0x00
+    };
 
     uint8_t rsaheader1024[] = {
         0x30,
@@ -382,7 +382,8 @@ static int trustm_object_load_pkey_rsa(
         0x01,
         0x01,
         0x05,
-        0x00};
+        0x00
+    };
 
     trustm_rsa_key_t *trustm_rsa_key = NULL;
     TRUSTM_PROVIDER_DBGFN(">");
@@ -567,26 +568,29 @@ static int trustm_genpkey_ec(trustm_object_ctx_t *trustm_object_ctx) {
                               0x02, 0x01, 0x06, 0x05,  // OID:1.3.132.0.35
                               0x2B, 0x81, 0x04, 0x00, 0x23};
 
-    uint8_t eccheaderBrainPool256[] = {
-        0x30, 0x5A,  // SEQUENCE
-        0x30, 0x14,  //SEQUENCE
-        0x06, 0x07,  // OID:1.2.840.10045.2.1
-        0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01, 0x06, 0x09,  // OID:1.3.36.3.3.2.8.1.1.7
-        0x2B, 0x24, 0x03, 0x03, 0x02, 0x08, 0x01, 0x01, 0x07};
+    uint8_t eccheaderBrainPool256[] = {0x30, 0x5A,  // SEQUENCE
+                                       0x30, 0x14,  //SEQUENCE
+                                       0x06, 0x07,  // OID:1.2.840.10045.2.1
+                                       0x2A, 0x86, 0x48, 0xCE, 0x3D,
+                                       0x02, 0x01, 0x06, 0x09,  // OID:1.3.36.3.3.2.8.1.1.7
+                                       0x2B, 0x24, 0x03, 0x03, 0x02,
+                                       0x08, 0x01, 0x01, 0x07};
 
-    uint8_t eccheaderBrainPool384[] = {
-        0x30, 0x7A,  // SEQUENCE
-        0x30, 0x14,  //SEQUENCE
-        0x06, 0x07,  // OID:1.2.840.10045.2.1
-        0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01, 0x06, 0x09,  // OID:1.3.36.3.3.2.8.1.1.11
-        0x2B, 0x24, 0x03, 0x03, 0x02, 0x08, 0x01, 0x01, 0x0B};
+    uint8_t eccheaderBrainPool384[] = {0x30, 0x7A,  // SEQUENCE
+                                       0x30, 0x14,  //SEQUENCE
+                                       0x06, 0x07,  // OID:1.2.840.10045.2.1
+                                       0x2A, 0x86, 0x48, 0xCE, 0x3D,
+                                       0x02, 0x01, 0x06, 0x09,  // OID:1.3.36.3.3.2.8.1.1.11
+                                       0x2B, 0x24, 0x03, 0x03, 0x02,
+                                       0x08, 0x01, 0x01, 0x0B};
 
-    uint8_t eccheaderBrainPool512[] = {
-        0x30, 0x81, 0x9B,  // SEQUENCE
-        0x30, 0x14,  //SEQUENCE
-        0x06, 0x07,  // OID:1.2.840.10045.2.1
-        0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01, 0x06, 0x09,  // OID:1.3.36.3.3.2.8.1.1.13
-        0x2B, 0x24, 0x03, 0x03, 0x02, 0x08, 0x01, 0x01, 0x0d};
+    uint8_t eccheaderBrainPool512[] = {0x30, 0x81, 0x9B,  // SEQUENCE
+                                       0x30, 0x14,  //SEQUENCE
+                                       0x06, 0x07,  // OID:1.2.840.10045.2.1
+                                       0x2A, 0x86, 0x48, 0xCE, 0x3D,
+                                       0x02, 0x01, 0x06, 0x09,  // OID:1.3.36.3.3.2.8.1.1.13
+                                       0x2B, 0x24, 0x03, 0x03, 0x02,
+                                       0x08, 0x01, 0x01, 0x0d};
 
     TRUSTM_PROVIDER_DBGFN(">");
     TRUSTM_PROVIDER_SSL_MUTEX_ACQUIRE
@@ -850,26 +854,29 @@ static int trustm_object_load_pkey_ec(
                               0x02, 0x01, 0x06, 0x05,  // OID:1.3.132.0.35
                               0x2B, 0x81, 0x04, 0x00, 0x23};
 
-    uint8_t eccheaderBrainPool256[] = {
-        0x30, 0x5A,  // SEQUENCE
-        0x30, 0x14,  //SEQUENCE
-        0x06, 0x07,  // OID:1.2.840.10045.2.1
-        0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01, 0x06, 0x09,  // OID:1.3.36.3.3.2.8.1.1.7
-        0x2B, 0x24, 0x03, 0x03, 0x02, 0x08, 0x01, 0x01, 0x07};
+    uint8_t eccheaderBrainPool256[] = {0x30, 0x5A,  // SEQUENCE
+                                       0x30, 0x14,  //SEQUENCE
+                                       0x06, 0x07,  // OID:1.2.840.10045.2.1
+                                       0x2A, 0x86, 0x48, 0xCE, 0x3D,
+                                       0x02, 0x01, 0x06, 0x09,  // OID:1.3.36.3.3.2.8.1.1.7
+                                       0x2B, 0x24, 0x03, 0x03, 0x02,
+                                       0x08, 0x01, 0x01, 0x07};
 
-    uint8_t eccheaderBrainPool384[] = {
-        0x30, 0x7A,  // SEQUENCE
-        0x30, 0x14,  //SEQUENCE
-        0x06, 0x07,  // OID:1.2.840.10045.2.1
-        0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01, 0x06, 0x09,  // OID:1.3.36.3.3.2.8.1.1.11
-        0x2B, 0x24, 0x03, 0x03, 0x02, 0x08, 0x01, 0x01, 0x0B};
+    uint8_t eccheaderBrainPool384[] = {0x30, 0x7A,  // SEQUENCE
+                                       0x30, 0x14,  //SEQUENCE
+                                       0x06, 0x07,  // OID:1.2.840.10045.2.1
+                                       0x2A, 0x86, 0x48, 0xCE, 0x3D,
+                                       0x02, 0x01, 0x06, 0x09,  // OID:1.3.36.3.3.2.8.1.1.11
+                                       0x2B, 0x24, 0x03, 0x03, 0x02,
+                                       0x08, 0x01, 0x01, 0x0B};
 
-    uint8_t eccheaderBrainPool512[] = {
-        0x30, 0x81, 0x9B,  // SEQUENCE
-        0x30, 0x14,  //SEQUENCE
-        0x06, 0x07,  // OID:1.2.840.10045.2.1
-        0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01, 0x06, 0x09,  // OID:1.3.36.3.3.2.8.1.1.13
-        0x2B, 0x24, 0x03, 0x03, 0x02, 0x08, 0x01, 0x01, 0x0d};
+    uint8_t eccheaderBrainPool512[] = {0x30, 0x81, 0x9B,  // SEQUENCE
+                                       0x30, 0x14,  //SEQUENCE
+                                       0x06, 0x07,  // OID:1.2.840.10045.2.1
+                                       0x2A, 0x86, 0x48, 0xCE, 0x3D,
+                                       0x02, 0x01, 0x06, 0x09,  // OID:1.3.36.3.3.2.8.1.1.13
+                                       0x2B, 0x24, 0x03, 0x03, 0x02,
+                                       0x08, 0x01, 0x01, 0x0d};
 
     trustm_ec_key_t *trustm_ec_key = NULL;
     TRUSTM_PROVIDER_DBGFN(">");
@@ -1119,4 +1126,5 @@ const OSSL_DISPATCH trustm_object_store_functions[] = {
     {OSSL_FUNC_STORE_LOAD, (void (*)(void))trustm_object_load},
     {OSSL_FUNC_STORE_EOF, (void (*)(void))trustm_object_eof},
     {OSSL_FUNC_STORE_CLOSE, (void (*)(void))trustm_object_close},
-    {0, NULL}};
+    {0, NULL}
+};

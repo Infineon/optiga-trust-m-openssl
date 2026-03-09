@@ -1,8 +1,5 @@
-/*
- * SPDX-FileCopyrightText: 2025 Infineon Technologies AG
- *
- * SPDX-License-Identifier: MIT
- */
+// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-License-Identifier: MIT
 
 #include <openssl/core_dispatch.h>
 #include <openssl/core_names.h>
@@ -1367,7 +1364,8 @@ static const OSSL_PARAM *trustm_rsa_signature_settable_ctx_params(void *ctx, voi
         OSSL_PARAM_utf8_string(OSSL_SIGNATURE_PARAM_PAD_MODE, NULL, 0),
         OSSL_PARAM_utf8_string(OSSL_SIGNATURE_PARAM_DIGEST, NULL, 0),
         OSSL_PARAM_utf8_string(OSSL_SIGNATURE_PARAM_PSS_SALTLEN, NULL, 0),
-        OSSL_PARAM_END};
+        OSSL_PARAM_END
+    };
 
     return settable;
 }
@@ -1375,7 +1373,8 @@ static const OSSL_PARAM *trustm_rsa_signature_settable_ctx_params(void *ctx, voi
 static const OSSL_PARAM *trustm_ecdsa_signature_settable_ctx_params(void *ctx, void *provctx) {
     static OSSL_PARAM settable[] = {
         OSSL_PARAM_utf8_string(OSSL_SIGNATURE_PARAM_DIGEST, NULL, 0),
-        OSSL_PARAM_END};
+        OSSL_PARAM_END
+    };
 
     return settable;
 }
@@ -1444,7 +1443,8 @@ error:
 static const OSSL_PARAM *trustm_signature_gettable_ctx_params(void *ctx, void *provctx) {
     static OSSL_PARAM gettable[] = {
         OSSL_PARAM_octet_string(OSSL_SIGNATURE_PARAM_ALGORITHM_ID, NULL, 0),
-        OSSL_PARAM_END};
+        OSSL_PARAM_END
+    };
 
     return gettable;
 }
@@ -1468,7 +1468,8 @@ const OSSL_DISPATCH trustm_rsa_signature_functions[] = {
     {OSSL_FUNC_SIGNATURE_SET_CTX_PARAMS, (void (*)(void))trustm_rsa_signature_set_ctx_params},
     {OSSL_FUNC_SIGNATURE_SETTABLE_CTX_PARAMS,
      (void (*)(void))trustm_rsa_signature_settable_ctx_params},
-    {0, NULL}};
+    {0, NULL}
+};
 
 const OSSL_DISPATCH trustm_ecdsa_signature_functions[] = {
     {OSSL_FUNC_SIGNATURE_NEWCTX, (void (*)(void))trustm_signature_newctx},
@@ -1478,11 +1479,11 @@ const OSSL_DISPATCH trustm_ecdsa_signature_functions[] = {
     {OSSL_FUNC_SIGNATURE_SIGN, (void (*)(void))trustm_ecdsa_signature_sign},
     {OSSL_FUNC_SIGNATURE_DIGEST_SIGN_INIT, (void (*)(void))trustm_ecdsa_signature_digest_init},
     {OSSL_FUNC_SIGNATURE_DIGEST_SIGN_UPDATE, (void (*)(void))trustm_ecdsa_signature_digest_update},
-    {OSSL_FUNC_SIGNATURE_DIGEST_SIGN_FINAL,
-     (void (*)(void))trustm_ecdsa_signature_digest_sign_final},
+    {OSSL_FUNC_SIGNATURE_DIGEST_SIGN_FINAL, (void (*)(void))trustm_ecdsa_signature_digest_sign_final
+    },
     {OSSL_FUNC_SIGNATURE_DIGEST_VERIFY_INIT, (void (*)(void))trustm_ecdsa_signature_digest_init},
-    {OSSL_FUNC_SIGNATURE_DIGEST_VERIFY_UPDATE,
-     (void (*)(void))trustm_ecdsa_signature_digest_update},
+    {OSSL_FUNC_SIGNATURE_DIGEST_VERIFY_UPDATE, (void (*)(void))trustm_ecdsa_signature_digest_update
+    },
     {OSSL_FUNC_SIGNATURE_DIGEST_VERIFY_FINAL,
      (void (*)(void))trustm_ecdsa_signature_digest_verify_final},
     {OSSL_FUNC_SIGNATURE_DIGEST_SIGN, (void (*)(void))trustm_ecdsa_signature_digest_sign},
@@ -1491,4 +1492,5 @@ const OSSL_DISPATCH trustm_ecdsa_signature_functions[] = {
     {OSSL_FUNC_SIGNATURE_SET_CTX_PARAMS, (void (*)(void))trustm_ecdsa_signature_set_ctx_params},
     {OSSL_FUNC_SIGNATURE_SETTABLE_CTX_PARAMS,
      (void (*)(void))trustm_ecdsa_signature_settable_ctx_params},
-    {0, NULL}};
+    {0, NULL}
+};

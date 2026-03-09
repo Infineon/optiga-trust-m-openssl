@@ -1,20 +1,13 @@
-# SPDX-FileCopyrightText: 2025 Infineon Technologies AG
-# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: Copyright (c) 2025-2026 Infineon Technologies AG
+# SPDX-License-Identifier: CC0-1.0
 
 version = 1
 
-# root
+# docs/images
 [[annotations]]
-path = ["CHANGELOG.md", "CONTRIBUTING.md", "README.md", "examples/scripts/openssl_multisession_test/README.md"]
+path = ["docs/images/**"]
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2025 Infineon Technologies AG"
-SPDX-License-Identifier = "CC-BY-NC-ND-4.0"
-
-# data/images
-[[annotations]]
-path = ["data/images/**"]
-precedence = "aggregate"
-SPDX-FileCopyrightText = "2025 Infineon Technologies AG"
+SPDX-FileCopyrightText = "Copyright (c) 2025-2026 Infineon Technologies AG"
 SPDX-License-Identifier = "CC-BY-NC-ND-4.0"
 
 # .cnf files
@@ -30,5 +23,5 @@ path = ["examples/scripts/openssl.cnf",
         "examples/scripts/ec_server_client_pem_file/openssl.cnf",
         "examples/scripts/trustm_curl_test/ca/root_ca.cnf"]
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2021-2025 Infineon Technologies AG"
+SPDX-FileCopyrightText = "Copyright (c) 2021-2026 Infineon Technologies AG"
 SPDX-License-Identifier = "CC-BY-NC-ND-4.0"

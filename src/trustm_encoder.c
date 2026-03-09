@@ -1,8 +1,5 @@
-/*
- * SPDX-FileCopyrightText: 2025 Infineon Technologies AG
- *
- * SPDX-License-Identifier: MIT
- */
+// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-License-Identifier: MIT
 
 #include <math.h>
 #include <openssl/asn1.h>
@@ -216,7 +213,8 @@ const OSSL_DISPATCH trustm_rsa_encoder_text_functions[] = {
     {OSSL_FUNC_ENCODER_NEWCTX, (void (*)(void))trustm_encoder_newctx},
     {OSSL_FUNC_ENCODER_FREECTX, (void (*)(void))trustm_encoder_freectx},
     {OSSL_FUNC_ENCODER_ENCODE, (void (*)(void))trustm_rsa_encoder_encode_text},
-    {0, NULL}};
+    {0, NULL}
+};
 
 ///////////////////////////////////////////////////////////////////////////////////////
 static int trustm_rsa_encode_public_SubjectPublicKeyInfo_pem(
@@ -290,7 +288,8 @@ const OSSL_DISPATCH trustm_rsa_encoder_SubjectPublicKeyInfo_pem_functions[] = {
     {OSSL_FUNC_ENCODER_DOES_SELECTION,
      (void (*)(void))trustm_rsa_encoder_SubjectPublicKeyInfo_pem_does_selection},
     {OSSL_FUNC_ENCODER_ENCODE, (void (*)(void))trustm_rsa_encoder_encode_SubjectPublicKeyInfo_pem},
-    {0, NULL}};
+    {0, NULL}
+};
 ///////////////////////////////////////////////////////////////////////////////////////
 
 static int trustm_rsa_encode_public_SubjectPublicKeyInfo_der(
@@ -364,7 +363,8 @@ const OSSL_DISPATCH trustm_rsa_encoder_SubjectPublicKeyInfo_der_functions[] = {
     {OSSL_FUNC_ENCODER_DOES_SELECTION,
      (void (*)(void))trustm_rsa_encoder_SubjectPublicKeyInfo_der_does_selection},
     {OSSL_FUNC_ENCODER_ENCODE, (void (*)(void))trustm_rsa_encoder_encode_SubjectPublicKeyInfo_der},
-    {0, NULL}};
+    {0, NULL}
+};
 
 ///////////////////////////////////////////////////////////////////////////////////
 static int trustm_rsa_encode_public_pkcs1_pem(
@@ -426,7 +426,8 @@ const OSSL_DISPATCH trustm_rsa_encoder_pkcs1_pem_functions[] = {
     {OSSL_FUNC_ENCODER_FREECTX, (void (*)(void))trustm_encoder_freectx},
     {OSSL_FUNC_ENCODER_DOES_SELECTION, (void (*)(void))trustm_rsa_encoder_pkcs1_pem_does_selection},
     {OSSL_FUNC_ENCODER_ENCODE, (void (*)(void))trustm_rsa_encoder_encode_pkcs1_pem},
-    {0, NULL}};
+    {0, NULL}
+};
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -490,7 +491,8 @@ const OSSL_DISPATCH trustm_rsa_encoder_pkcs1_der_functions[] = {
     {OSSL_FUNC_ENCODER_FREECTX, (void (*)(void))trustm_encoder_freectx},
     {OSSL_FUNC_ENCODER_DOES_SELECTION, (void (*)(void))trustm_rsa_encoder_pkcs1_der_does_selection},
     {OSSL_FUNC_ENCODER_ENCODE, (void (*)(void))trustm_rsa_encoder_encode_pkcs1_der},
-    {0, NULL}};
+    {0, NULL}
+};
 
 /* EC PUBLIC KEY ENCODERS */
 static X509_PUBKEY *trustm_get_x509_ec_pubkey(trustm_ec_key_t *pkey) {
@@ -602,7 +604,8 @@ const OSSL_DISPATCH trustm_ec_encoder_SubjectPublicKeyInfo_pem_functions[] = {
     {OSSL_FUNC_ENCODER_DOES_SELECTION,
      (void (*)(void))trustm_ec_encoder_SubjectPublicKeyInfo_pem_does_selection},
     {OSSL_FUNC_ENCODER_ENCODE, (void (*)(void))trustm_ec_encoder_encode_SubjectPublicKeyInfo_pem},
-    {0, NULL}};
+    {0, NULL}
+};
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -676,7 +679,8 @@ const OSSL_DISPATCH trustm_ec_encoder_SubjectPublicKeyInfo_der_functions[] = {
     {OSSL_FUNC_ENCODER_DOES_SELECTION,
      (void (*)(void))trustm_ec_encoder_SubjectPublicKeyInfo_der_does_selection},
     {OSSL_FUNC_ENCODER_ENCODE, (void (*)(void))trustm_ec_encoder_encode_SubjectPublicKeyInfo_der},
-    {0, NULL}};
+    {0, NULL}
+};
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -731,7 +735,8 @@ const OSSL_DISPATCH trustm_ec_encoder_text_functions[] = {
     {OSSL_FUNC_ENCODER_NEWCTX, (void (*)(void))trustm_encoder_newctx},
     {OSSL_FUNC_ENCODER_FREECTX, (void (*)(void))trustm_encoder_freectx},
     {OSSL_FUNC_ENCODER_ENCODE, (void (*)(void))trustm_ec_encoder_encode_text},
-    {0, NULL}};
+    {0, NULL}
+};
 
 // exporting private key ID into key.pem
 static OSSL_FUNC_encoder_encode_fn trustm_ec_encode_PrivateKeyInfo_pem;
@@ -802,14 +807,16 @@ const OSSL_DISPATCH trustm_ec_encoder_PrivateKeyInfo_pem_functions[] = {
     {OSSL_FUNC_ENCODER_DOES_SELECTION,
      (void (*)(void))trustm_encoder_PrivateKeyInfo_pem_does_selection},
     {OSSL_FUNC_ENCODER_ENCODE, (void (*)(void))trustm_ec_encode_PrivateKeyInfo_pem},
-    {0, NULL}};
+    {0, NULL}
+};
 const OSSL_DISPATCH trustm_rsa_encoder_PrivateKeyInfo_pem_functions[] = {
     {OSSL_FUNC_ENCODER_NEWCTX, (void (*)(void))trustm_encoder_newctx},
     {OSSL_FUNC_ENCODER_FREECTX, (void (*)(void))trustm_encoder_freectx},
     {OSSL_FUNC_ENCODER_DOES_SELECTION,
      (void (*)(void))trustm_encoder_PrivateKeyInfo_pem_does_selection},
     {OSSL_FUNC_ENCODER_ENCODE, (void (*)(void))trustm_rsa_encode_PrivateKeyInfo_pem},
-    {0, NULL}};
+    {0, NULL}
+};
 
 static OSSL_FUNC_encoder_encode_fn trustm_ec_encode_PrivateKeyInfo_der;
 static int trustm_ec_encode_PrivateKeyInfo_der(
@@ -848,11 +855,13 @@ const OSSL_DISPATCH trustm_ec_encoder_PrivateKeyInfo_der_functions[] = {
     {OSSL_FUNC_ENCODER_DOES_SELECTION,
      (void (*)(void))trustm_encoder_PrivateKeyInfo_der_does_selection},
     {OSSL_FUNC_ENCODER_ENCODE, (void (*)(void))trustm_ec_encode_PrivateKeyInfo_der},
-    {0, NULL}};
+    {0, NULL}
+};
 const OSSL_DISPATCH trustm_rsa_encoder_PrivateKeyInfo_der_functions[] = {
     {OSSL_FUNC_ENCODER_NEWCTX, (void (*)(void))trustm_encoder_newctx},
     {OSSL_FUNC_ENCODER_FREECTX, (void (*)(void))trustm_encoder_freectx},
     {OSSL_FUNC_ENCODER_DOES_SELECTION,
      (void (*)(void))trustm_encoder_PrivateKeyInfo_der_does_selection},
     {OSSL_FUNC_ENCODER_ENCODE, (void (*)(void))trustm_rsa_encode_PrivateKeyInfo_der},
-    {0, NULL}};
+    {0, NULL}
+};

@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# SPDX-FileCopyrightText: 2025 Infineon Technologies AG
-#
+# SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
 # SPDX-License-Identifier: MIT
 
 echo "input" > mydata.txt
@@ -20,5 +19,9 @@ openssl pkeyutl -provider trustm_provider -inkey 0x$KEY_OID:^  -sign -rawin -in 
 
 echo "------> verify Trust M signature with openssl"
 openssl dgst -verify pub_$KEY_OID.pem -keyform pem -sha256 -signature testsignature_521.bin mydata.txt
+
+rm testsignature_521.bin
+rm mydata.txt
+rm pub_$KEY_OID.pem
 
 

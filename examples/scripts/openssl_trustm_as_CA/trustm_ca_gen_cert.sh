@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# SPDX-FileCopyrightText: 2025 Infineon Technologies AG
-#
+# SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
 # SPDX-License-Identifier: MIT
 
 PROJECT_DIR=$(dirname "$(dirname "$(dirname "$(pwd)")")")
@@ -37,4 +36,4 @@ echo "Executing 'openssl x509 -in dev.pem -text'"
 openssl x509 -in ./demoCA/newcerts/dev.pem -text
 
 #~ rm -Rf demoCA/newcerts/
-#~ rm -f dev_privkey.pem dev.csr
+#~ rm dev_privkey.pem dev.csr

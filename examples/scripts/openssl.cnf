@@ -8,7 +8,6 @@ subjectKeyIdentifier=hash
 keyUsage=digitalSignature,keyEncipherment
 extendedKeyUsage=clientAuth
 
-
 [ cert_ext2 ]
 subjectKeyIdentifier=hash
 keyUsage=keyCertSign, cRLSign, digitalSignature

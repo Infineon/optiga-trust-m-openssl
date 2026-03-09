@@ -1,8 +1,5 @@
-/*
- * SPDX-FileCopyrightText: 2025 Infineon Technologies AG
- *
- * SPDX-License-Identifier: MIT
- */
+// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-License-Identifier: MIT
 
 #include <math.h>
 #include <openssl/bn.h>
@@ -167,7 +164,8 @@ static const OSSL_PARAM *trustm_rsa_keymgmt_gen_settable_params(void *ctx, void 
         OSSL_PARAM_size_t(OSSL_PKEY_PARAM_RSA_BITS, NULL),
         OSSL_PARAM_size_t(OSSL_PKEY_PARAM_RSA_PRIMES, NULL),
         OSSL_PARAM_BN(OSSL_PKEY_PARAM_RSA_E, NULL, 0),
-        OSSL_PARAM_END};
+        OSSL_PARAM_END
+    };
 
     return settable;
 }
@@ -197,7 +195,8 @@ static void *trustm_rsa_keymgmt_gen(void *ctx, OSSL_CALLBACK *cb, void *cbarg) {
         0x01,
         0x01,
         0x05,
-        0x00};
+        0x00
+    };
 
     uint8_t rsaheader1024[] = {
         0x30,
@@ -217,7 +216,8 @@ static void *trustm_rsa_keymgmt_gen(void *ctx, OSSL_CALLBACK *cb, void *cbarg) {
         0x01,
         0x01,
         0x05,
-        0x00};
+        0x00
+    };
 
     trustm_rsa_key = OPENSSL_zalloc(sizeof(trustm_rsa_key_t));
     TRUSTM_PROVIDER_DBGFN(">");
@@ -445,7 +445,8 @@ static const OSSL_PARAM *trustm_rsa_keymgmt_gettable_params(void *provctx) {
         /* public key */
         OSSL_PARAM_BN(OSSL_PKEY_PARAM_RSA_N, NULL, 0),
         OSSL_PARAM_BN(OSSL_PKEY_PARAM_RSA_E, NULL, 0),
-        OSSL_PARAM_END};
+        OSSL_PARAM_END
+    };
 
     return gettable;
 }
@@ -636,7 +637,8 @@ static const OSSL_PARAM *trustm_rsa_keymgmt_eximport_types(int selection) {
     static const OSSL_PARAM rsa_public_key_types[] = {
         OSSL_PARAM_BN(OSSL_PKEY_PARAM_RSA_N, NULL, 0),
         OSSL_PARAM_BN(OSSL_PKEY_PARAM_RSA_E, NULL, 0),
-        OSSL_PARAM_END};
+        OSSL_PARAM_END
+    };
     TRUSTM_PROVIDER_DBGFN(">");
     if ((selection & OSSL_KEYMGMT_SELECT_PUBLIC_KEY) != 0)
         return rsa_public_key_types;
@@ -655,12 +657,13 @@ const OSSL_DISPATCH trustm_rsa_keymgmt_functions[] = {
     {OSSL_FUNC_KEYMGMT_FREE, (void (*)(void))trustm_rsa_keymgmt_free},
     {OSSL_FUNC_KEYMGMT_GET_PARAMS, (void (*)(void))trustm_rsa_keymgmt_get_params},
     {OSSL_FUNC_KEYMGMT_GETTABLE_PARAMS, (void (*)(void))trustm_rsa_keymgmt_gettable_params},
-    {OSSL_FUNC_KEYMGMT_QUERY_OPERATION_NAME,
-     (void (*)(void))trustm_rsa_keymgmt_query_operation_name},
+    {OSSL_FUNC_KEYMGMT_QUERY_OPERATION_NAME, (void (*)(void))trustm_rsa_keymgmt_query_operation_name
+    },
     {OSSL_FUNC_KEYMGMT_HAS, (void (*)(void))trustm_rsa_keymgmt_has},
     {OSSL_FUNC_KEYMGMT_MATCH, (void (*)(void))trustm_rsa_keymgmt_match},
     {OSSL_FUNC_KEYMGMT_EXPORT, (void (*)(void))trustm_rsa_keymgmt_export},
     {OSSL_FUNC_KEYMGMT_IMPORT, (void (*)(void))trustm_rsa_keymgmt_import},
     {OSSL_FUNC_KEYMGMT_EXPORT_TYPES, (void (*)(void))trustm_rsa_keymgmt_eximport_types},
     {OSSL_FUNC_KEYMGMT_IMPORT_TYPES, (void (*)(void))trustm_rsa_keymgmt_eximport_types},
-    {0, NULL}};
+    {0, NULL}
+};

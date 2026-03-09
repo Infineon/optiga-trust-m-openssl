@@ -1,11 +1,2 @@
-# SPDX-FileCopyrightText: 2025 2025 Infineon Technologies AG
-#
-# SPDX-License-Identifier: MIT
-
-# Object files
-*.o
-*.obj
-bin/
-
-# Shared objects (inc. Windows DLLs)
-*.so
+# SPDX-FileCopyrightText: Copyright (c) 2024-2025 Infineon Technologies AG
+# SPDX-License-Identifier: CC0-1.0

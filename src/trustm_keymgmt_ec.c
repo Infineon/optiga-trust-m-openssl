@@ -1,8 +1,5 @@
-/*
- * SPDX-FileCopyrightText: 2025 Infineon Technologies AG
- *
- * SPDX-License-Identifier: MIT
- */
+// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-License-Identifier: MIT
 
 #include <openssl/core_dispatch.h>
 #include <openssl/core_names.h>
@@ -175,7 +172,8 @@ static const OSSL_PARAM *trustm_ec_keymgmt_gen_settable_params(void *ctx, void *
         OSSL_PARAM_int(TRUSTM_KEY_USAGE, NULL),
         /* mandatory openssl param */
         OSSL_PARAM_utf8_string(OSSL_PKEY_PARAM_GROUP_NAME, NULL, 0),
-        OSSL_PARAM_END};
+        OSSL_PARAM_END
+    };
 
     return settable;
 }
@@ -209,26 +207,29 @@ static void *trustm_ec_keymgmt_gen(void *ctx, OSSL_CALLBACK *cb, void *cbarg) {
                               0x02, 0x01, 0x06, 0x05,  // OID:1.3.132.0.35
                               0x2B, 0x81, 0x04, 0x00, 0x23};
 
-    uint8_t eccheaderBrainPool256[] = {
-        0x30, 0x5A,  // SEQUENCE
-        0x30, 0x14,  //SEQUENCE
-        0x06, 0x07,  // OID:1.2.840.10045.2.1
-        0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01, 0x06, 0x09,  // OID:1.3.36.3.3.2.8.1.1.7
-        0x2B, 0x24, 0x03, 0x03, 0x02, 0x08, 0x01, 0x01, 0x07};
+    uint8_t eccheaderBrainPool256[] = {0x30, 0x5A,  // SEQUENCE
+                                       0x30, 0x14,  //SEQUENCE
+                                       0x06, 0x07,  // OID:1.2.840.10045.2.1
+                                       0x2A, 0x86, 0x48, 0xCE, 0x3D,
+                                       0x02, 0x01, 0x06, 0x09,  // OID:1.3.36.3.3.2.8.1.1.7
+                                       0x2B, 0x24, 0x03, 0x03, 0x02,
+                                       0x08, 0x01, 0x01, 0x07};
 
-    uint8_t eccheaderBrainPool384[] = {
-        0x30, 0x7A,  // SEQUENCE
-        0x30, 0x14,  //SEQUENCE
-        0x06, 0x07,  // OID:1.2.840.10045.2.1
-        0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01, 0x06, 0x09,  // OID:1.3.36.3.3.2.8.1.1.11
-        0x2B, 0x24, 0x03, 0x03, 0x02, 0x08, 0x01, 0x01, 0x0B};
+    uint8_t eccheaderBrainPool384[] = {0x30, 0x7A,  // SEQUENCE
+                                       0x30, 0x14,  //SEQUENCE
+                                       0x06, 0x07,  // OID:1.2.840.10045.2.1
+                                       0x2A, 0x86, 0x48, 0xCE, 0x3D,
+                                       0x02, 0x01, 0x06, 0x09,  // OID:1.3.36.3.3.2.8.1.1.11
+                                       0x2B, 0x24, 0x03, 0x03, 0x02,
+                                       0x08, 0x01, 0x01, 0x0B};
 
-    uint8_t eccheaderBrainPool512[] = {
-        0x30, 0x81, 0x9B,  // SEQUENCE
-        0x30, 0x14,  //SEQUENCE
-        0x06, 0x07,  // OID:1.2.840.10045.2.1
-        0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01, 0x06, 0x09,  // OID:1.3.36.3.3.2.8.1.1.13
-        0x2B, 0x24, 0x03, 0x03, 0x02, 0x08, 0x01, 0x01, 0x0d};
+    uint8_t eccheaderBrainPool512[] = {0x30, 0x81, 0x9B,  // SEQUENCE
+                                       0x30, 0x14,  //SEQUENCE
+                                       0x06, 0x07,  // OID:1.2.840.10045.2.1
+                                       0x2A, 0x86, 0x48, 0xCE, 0x3D,
+                                       0x02, 0x01, 0x06, 0x09,  // OID:1.3.36.3.3.2.8.1.1.13
+                                       0x2B, 0x24, 0x03, 0x03, 0x02,
+                                       0x08, 0x01, 0x01, 0x0d};
 
     trustm_ec_key = OPENSSL_zalloc(sizeof(trustm_ec_key_t));
     if (trustm_ec_key == NULL)
@@ -446,7 +447,8 @@ static int trustm_ec_keymgmt_get_params(void *keydata, OSSL_PARAM params[]) {
             || trustm_ec_key->key_curve == OPTIGA_ECC_CURVE_NIST_P_521)
             sec_bits = 256;
 
-        else if (trustm_ec_key->key_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_384R1 || trustm_ec_key->key_curve == OPTIGA_ECC_CURVE_NIST_P_384)
+        else if (trustm_ec_key->key_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_384R1
+                 || trustm_ec_key->key_curve == OPTIGA_ECC_CURVE_NIST_P_384)
             sec_bits = 192;
 
         else
@@ -510,7 +512,8 @@ static const OSSL_PARAM *trustm_ec_keymgmt_gettable_params(void *provctx) {
         OSSL_PARAM_octet_string(OSSL_PKEY_PARAM_PUB_KEY, NULL, 0),
         OSSL_PARAM_BN(OSSL_PKEY_PARAM_EC_PUB_X, NULL, 0),
         OSSL_PARAM_BN(OSSL_PKEY_PARAM_EC_PUB_Y, NULL, 0),
-        OSSL_PARAM_END};
+        OSSL_PARAM_END
+    };
 
     return gettable;
 }
@@ -537,7 +540,8 @@ static int trustm_ec_keymgmt_set_params(void *keydata, const OSSL_PARAM params[]
 static const OSSL_PARAM *trustm_ec_keymgmt_settable_params(void *provctx) {
     static OSSL_PARAM settable[] = {
         OSSL_PARAM_octet_string(OSSL_PKEY_PARAM_ENCODED_PUBLIC_KEY, NULL, 0),
-        OSSL_PARAM_END};
+        OSSL_PARAM_END
+    };
 
     return settable;
 }
@@ -630,7 +634,8 @@ static int trustm_ec_keymgmt_import(void *keydata, int selection, const OSSL_PAR
             TRUSTM_PROVIDER_DBGFN("Curve name: %s", curve_name);
             if (strcmp(curve_name, "secp384r1") == 0) {
                 trustm_ec_key->key_curve = OPTIGA_ECC_CURVE_NIST_P_384;
-            } else if (strcmp(curve_name, "prime256v1") == 0 || strcmp(curve_name, "secp256r1") == 0) {
+            } else if (strcmp(curve_name, "prime256v1") == 0
+                       || strcmp(curve_name, "secp256r1") == 0) {
                 trustm_ec_key->key_curve = OPTIGA_ECC_CURVE_NIST_P_256;
             } else if (strcmp(curve_name, "secp521r1") == 0) {
                 trustm_ec_key->key_curve = OPTIGA_ECC_CURVE_NIST_P_521;
@@ -710,12 +715,14 @@ static const OSSL_PARAM *trustm_ec_keymgmt_eximport_types(int selection) {
     static const OSSL_PARAM ecc_public_key_types[] = {
         OSSL_PARAM_BN(OSSL_PKEY_PARAM_EC_PUB_X, NULL, 0),
         OSSL_PARAM_BN(OSSL_PKEY_PARAM_EC_PUB_Y, NULL, 0),
-        OSSL_PARAM_END};
+        OSSL_PARAM_END
+    };
     static const OSSL_PARAM ecc_private_key_types[] = {
         OSSL_PARAM_BN(OSSL_PKEY_PARAM_PRIV_KEY, NULL, 0),
         OSSL_PARAM_BN(OSSL_PKEY_PARAM_EC_PUB_X, NULL, 0),
         OSSL_PARAM_BN(OSSL_PKEY_PARAM_EC_PUB_Y, NULL, 0),
-        OSSL_PARAM_END};
+        OSSL_PARAM_END
+    };
 
     if (selection & OSSL_KEYMGMT_SELECT_PRIVATE_KEY)
         return ecc_private_key_types;
@@ -737,12 +744,13 @@ const OSSL_DISPATCH trustm_ec_keymgmt_functions[] = {
     {OSSL_FUNC_KEYMGMT_GETTABLE_PARAMS, (void (*)(void))trustm_ec_keymgmt_gettable_params},
     {OSSL_FUNC_KEYMGMT_SET_PARAMS, (void (*)(void))trustm_ec_keymgmt_set_params},
     {OSSL_FUNC_KEYMGMT_SETTABLE_PARAMS, (void (*)(void))trustm_ec_keymgmt_settable_params},
-    {OSSL_FUNC_KEYMGMT_QUERY_OPERATION_NAME,
-     (void (*)(void))trustm_ec_keymgmt_query_operation_name},
+    {OSSL_FUNC_KEYMGMT_QUERY_OPERATION_NAME, (void (*)(void))trustm_ec_keymgmt_query_operation_name
+    },
     {OSSL_FUNC_KEYMGMT_HAS, (void (*)(void))trustm_ec_keymgmt_has},
     {OSSL_FUNC_KEYMGMT_MATCH, (void (*)(void))trustm_ec_keymgmt_match},
     {OSSL_FUNC_KEYMGMT_IMPORT, (void (*)(void))trustm_ec_keymgmt_import},
     {OSSL_FUNC_KEYMGMT_IMPORT_TYPES, (void (*)(void))trustm_ec_keymgmt_eximport_types},
     {OSSL_FUNC_KEYMGMT_EXPORT, (void (*)(void))trustm_ec_keymgmt_export},
     {OSSL_FUNC_KEYMGMT_EXPORT_TYPES, (void (*)(void))trustm_ec_keymgmt_eximport_types},
-    {0, NULL}};
+    {0, NULL}
+};

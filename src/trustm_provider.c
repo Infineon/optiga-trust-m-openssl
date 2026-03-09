@@ -1,8 +1,5 @@
-/*
- * SPDX-FileCopyrightText: 2025 Infineon Technologies AG
- *
- * SPDX-License-Identifier: MIT
- */
+// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-License-Identifier: MIT
 
 #include <openssl/core_dispatch.h>
 #include <openssl/core_names.h>
@@ -297,13 +294,15 @@ extern const OSSL_DISPATCH trustm_rand_functions[];
 
 static const OSSL_ALGORITHM trustm_rands[] = {
     {"CTR-DRBG", "provider=trustm", trustm_rand_functions},
-    {NULL, NULL, NULL}};
+    {NULL, NULL, NULL}
+};
 
 extern const OSSL_DISPATCH trustm_digest_functions[];
 
 static const OSSL_ALGORITHM trustm_digests[] = {
     {"SHA2-256:SHA-256:SHA256", "provider=trustm", trustm_digest_functions},
-    {NULL, NULL, NULL}};
+    {NULL, NULL, NULL}
+};
 
 extern const OSSL_DISPATCH trustm_rsa_keymgmt_functions[];
 extern const OSSL_DISPATCH trustm_ec_keymgmt_functions[];
@@ -312,13 +311,15 @@ extern const OSSL_DISPATCH trustm_ec_keymgmt_functions[];
 static const OSSL_ALGORITHM trustm_keymgmts[] = {
     {"RSA:rsaEncryption", "provider=trustm", trustm_rsa_keymgmt_functions},
     {"EC:id-ecPublicKey", "provider=trustm", trustm_ec_keymgmt_functions},
-    {NULL, NULL, NULL}};
+    {NULL, NULL, NULL}
+};
 
 extern const OSSL_DISPATCH trustm_ecdh_keyexch_functions[];
 
 static const OSSL_ALGORITHM trustm_keyexchs[] = {
     {"ECDH", "provider=trustm", trustm_ecdh_keyexch_functions},
-    {NULL, NULL, NULL}};
+    {NULL, NULL, NULL}
+};
 
 extern const OSSL_DISPATCH trustm_rsa_encoder_text_functions[];
 extern const OSSL_DISPATCH trustm_rsa_encoder_SubjectPublicKeyInfo_pem_functions[];
@@ -367,7 +368,8 @@ static const OSSL_ALGORITHM trustm_encoders[] = {
     {"EC",
      "provider=trustm,output=pem,structure=PrivateKeyInfo",
      trustm_ec_encoder_PrivateKeyInfo_pem_functions},
-    {NULL, NULL, NULL}};
+    {NULL, NULL, NULL}
+};
 
 extern const OSSL_DISPATCH trustm_object_store_functions[];
 
@@ -378,7 +380,8 @@ static const OSSL_ALGORITHM trustm_stores[] = {
     {"0xE0F1", TRUSTM_PROPS(store), trustm_object_store_functions},
     {"0xE0F2", TRUSTM_PROPS(store), trustm_object_store_functions},
     {"0xE0F3", TRUSTM_PROPS(store), trustm_object_store_functions},
-    {NULL, NULL, NULL}};
+    {NULL, NULL, NULL}
+};
 
 extern const OSSL_DISPATCH trustm_rsa_signature_functions[];
 extern const OSSL_DISPATCH trustm_ecdsa_signature_functions[];
@@ -386,13 +389,15 @@ extern const OSSL_DISPATCH trustm_ecdsa_signature_functions[];
 static const OSSL_ALGORITHM trustm_signatures[] = {
     {"RSA:rsaEncryption", "provider=trustm", trustm_rsa_signature_functions},
     {"ECDSA", "provider=trustm", trustm_ecdsa_signature_functions},
-    {NULL, NULL, NULL}};
+    {NULL, NULL, NULL}
+};
 
 extern const OSSL_DISPATCH trustm_rsa_asymcipher_functions[];
 
 static const OSSL_ALGORITHM trustm_asymciphers[] = {
     {"RSA:rsaEncryption", "provider=trustm", trustm_rsa_asymcipher_functions},
-    {NULL, NULL, NULL}};
+    {NULL, NULL, NULL}
+};
 
 static const OSSL_ALGORITHM *
 trustm_query_operation(void *provctx, int operation_id, int *no_cache) {
@@ -431,7 +436,8 @@ static const OSSL_PARAM *trustm_gettable_params(void *provctx) {
         OSSL_PARAM_DEFN("name", OSSL_PARAM_UTF8_PTR, NULL, 0),
         OSSL_PARAM_DEFN("version", OSSL_PARAM_UTF8_PTR, NULL, 0),
         OSSL_PARAM_DEFN("build", OSSL_PARAM_UTF8_PTR, NULL, 0),
-        OSSL_PARAM_END};
+        OSSL_PARAM_END
+    };
 
     return param_types;
 }
@@ -493,34 +499,19 @@ static const TLS_GROUP_CONSTANTS tls_group_list[] = {
     {TLS_GROUP_ID_secp521r1, 256, TLS1_VERSION, 0, DTLS1_VERSION, 0},
 };
 #define TLS_GROUP_ENTRY(tlsname, realname, algorithm, idx) \
-    { \
-        OSSL_PARAM_utf8_string(OSSL_CAPABILITY_TLS_GROUP_NAME, tlsname, sizeof(tlsname)), \
-            OSSL_PARAM_utf8_string( \
-                OSSL_CAPABILITY_TLS_GROUP_NAME_INTERNAL, \
-                realname, \
-                sizeof(realname) \
-            ), \
-            OSSL_PARAM_utf8_string(OSSL_CAPABILITY_TLS_GROUP_ALG, algorithm, sizeof(algorithm)), \
-            OSSL_PARAM_uint( \
-                OSSL_CAPABILITY_TLS_GROUP_ID, \
-                (unsigned int *)&tls_group_list[idx].group_id \
-            ), \
-            OSSL_PARAM_uint( \
-                OSSL_CAPABILITY_TLS_GROUP_SECURITY_BITS, \
-                (unsigned int *)&tls_group_list[idx].secbits \
-            ), \
-            OSSL_PARAM_int(OSSL_CAPABILITY_TLS_GROUP_MIN_TLS, (int *)&tls_group_list[idx].mintls), \
-            OSSL_PARAM_int(OSSL_CAPABILITY_TLS_GROUP_MAX_TLS, (int *)&tls_group_list[idx].maxtls), \
-            OSSL_PARAM_int( \
-                OSSL_CAPABILITY_TLS_GROUP_MIN_DTLS, \
-                (int *)&tls_group_list[idx].mindtls \
-            ), \
-            OSSL_PARAM_int( \
-                OSSL_CAPABILITY_TLS_GROUP_MAX_DTLS, \
-                (int *)&tls_group_list[idx].maxdtls \
-            ), \
-            OSSL_PARAM_END \
-    }
+    {OSSL_PARAM_utf8_string(OSSL_CAPABILITY_TLS_GROUP_NAME, tlsname, sizeof(tlsname)), \
+     OSSL_PARAM_utf8_string(OSSL_CAPABILITY_TLS_GROUP_NAME_INTERNAL, realname, sizeof(realname)), \
+     OSSL_PARAM_utf8_string(OSSL_CAPABILITY_TLS_GROUP_ALG, algorithm, sizeof(algorithm)), \
+     OSSL_PARAM_uint(OSSL_CAPABILITY_TLS_GROUP_ID, (unsigned int *)&tls_group_list[idx].group_id), \
+     OSSL_PARAM_uint( \
+         OSSL_CAPABILITY_TLS_GROUP_SECURITY_BITS, \
+         (unsigned int *)&tls_group_list[idx].secbits \
+     ), \
+     OSSL_PARAM_int(OSSL_CAPABILITY_TLS_GROUP_MIN_TLS, (int *)&tls_group_list[idx].mintls), \
+     OSSL_PARAM_int(OSSL_CAPABILITY_TLS_GROUP_MAX_TLS, (int *)&tls_group_list[idx].maxtls), \
+     OSSL_PARAM_int(OSSL_CAPABILITY_TLS_GROUP_MIN_DTLS, (int *)&tls_group_list[idx].mindtls), \
+     OSSL_PARAM_int(OSSL_CAPABILITY_TLS_GROUP_MAX_DTLS, (int *)&tls_group_list[idx].maxdtls), \
+     OSSL_PARAM_END}
 
 static const OSSL_PARAM param_tls_group_list[][10] = {
     TLS_GROUP_ENTRY("secp256r1", "prime256v1", "EC", 0),
@@ -548,7 +539,8 @@ static const OSSL_ITEM *trustm_get_reason_strings(void *provctx) {
     static const OSSL_ITEM reason_strings[] = {
         {TRUSTM_ERR_INIT_FAILURE, "TrustM Error Initializtion Failed"},
         {TRUSTM_ERR_CANNOT_GET_RANDOM, "TrustM Error cannot get random"},
-        {0, NULL}};
+        {0, NULL}
+    };
 
     return reason_strings;
 }
@@ -561,7 +553,8 @@ static const OSSL_DISPATCH trustm_dispatch_table[] = {
     {OSSL_FUNC_PROVIDER_TEARDOWN, (void (*)(void))trustm_teardown},
     {OSSL_FUNC_PROVIDER_GET_REASON_STRINGS, (void (*)(void))trustm_get_reason_strings},
     {OSSL_FUNC_PROVIDER_GET_CAPABILITIES, (void (*)(void))trustm_get_capabilities},
-    {0, NULL}};
+    {0, NULL}
+};
 
 OPENSSL_EXPORT int OSSL_provider_init(
     const OSSL_CORE_HANDLE *handle,

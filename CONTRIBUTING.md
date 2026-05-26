@@ -16,12 +16,12 @@ contributions.
 
 ## Table of contents
 
-- [I Have a question](#i-have-a-question)
-- [I Want to contribute](#i-want-to-contribute)
+- [I have a question](#i-have-a-question)
+- [I want to contribute](#i-want-to-contribute)
   - [Reporting bugs](#reporting-bugs)
   - [Suggesting enhancements](#suggesting-enhancements)
 
-## I Have a question
+## I have a question
 
 > If you want to ask a question, we assume that you have read the available
 > [documentation](README.md).

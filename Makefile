@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+# SPDX-FileCopyrightText: Copyright (c) 2026 Infineon Technologies AG
 # SPDX-License-Identifier: MIT
 
 TRUSTM = external/optiga-trust-m
@@ -7,12 +7,21 @@ BUILD_FOR_ULTRA96 = NO
 USE_LIBGPIOD_RPI = YES
 
 PALDIR =  $(TRUSTM)/extras/pal/linux
+
+MBEDTLS_4X = $(TRUSTM)/external/mbedtls-4.x
+TF_PSA_DIR = $(MBEDTLS_4X)/tf-psa-crypto
+
 LIBDIR = $(TRUSTM)/src/util
 LIBDIR += $(TRUSTM)/src/crypt
 LIBDIR += $(TRUSTM)/src/comms
 LIBDIR += $(TRUSTM)/src/common
 LIBDIR += $(TRUSTM)/src/cmd
-LIBDIR += $(TRUSTM)/external/mbedtls/library
+LIBDIR += $(MBEDTLS_4X)/library
+LIBDIR += $(TF_PSA_DIR)/core
+LIBDIR += $(TF_PSA_DIR)/platform
+LIBDIR += $(TF_PSA_DIR)/utilities
+LIBDIR += $(TF_PSA_DIR)/extras
+LIBDIR += $(TF_PSA_DIR)/drivers/builtin/src
 LIBDIR += src/helper
 
 ARCH := $(shell dpkg --print-architecture)
@@ -20,6 +29,8 @@ BINDIR = bin
 PROVDIR = src
 ifeq ($(ARCH), arm64)
 LIB_INSTALL_DIR = /usr/lib/aarch64-linux-gnu
+else ifeq ($(ARCH), amd64)
+LIB_INSTALL_DIR = /usr/lib/x86_64-linux-gnu
 else
 LIB_INSTALL_DIR = /usr/lib/arm-linux-gnueabihf
 endif
@@ -35,8 +46,17 @@ INCDIR += $(TRUSTM)/extras/pal/linux
 INCDIR += $(TRUSTM)/extras/pal/linux/include
 INCDIR += include/helper
 INCDIR += include
-INCDIR += $(TRUSTM)/external/mbedtls/include
-#INCDIR += $(TRUSTM)/external/mbedtls/include/mbedtls
+INCDIR += $(MBEDTLS_4X)/include
+INCDIR += $(MBEDTLS_4X)/library
+INCDIR += $(TF_PSA_DIR)/include
+INCDIR += $(TF_PSA_DIR)/include/psa
+INCDIR += $(TF_PSA_DIR)/utilities
+INCDIR += $(TF_PSA_DIR)/dispatch
+INCDIR += $(TF_PSA_DIR)/platform
+INCDIR += $(TF_PSA_DIR)/drivers/builtin/include
+INCDIR += $(TF_PSA_DIR)/drivers/builtin/src
+INCDIR += $(TF_PSA_DIR)/core
+INCDIR += $(TF_PSA_DIR)/extras
 INCDIR += $(TRUSTM)/config
 
 
@@ -61,7 +81,7 @@ ifdef LIBDIR
         LIBSRC += $(PALDIR)/pal_os_lock.c
         LIBSRC += $(PALDIR)/pal_os_timer.c
         LIBSRC += $(PALDIR)/pal_os_memory.c
-        LIBSRC += $(TRUSTM)/extras/pal/pal_crypt_mbedtls.c
+        LIBSRC += $(TRUSTM)/extras/pal/pal_crypt_psa.c
         LIBSRC += $(TRUSTM)/extras/pal/linux/pal_shared_mutex.c
         ifeq ($(USE_LIBGPIOD_RPI), YES)
             LIBSRC += $(PALDIR)/target/gpiod/pal_ifx_i2c_config.c
@@ -99,6 +119,9 @@ CFLAGS += -c
 ifeq ($(ARCH), arm64)
 CFLAGS += -fPIC
 endif
+ifeq ($(ARCH), amd64)
+CFLAGS += -fPIC
+endif
 #CFLAGS += $(DEBUG)
 CFLAGS += $(INCDIR)
 CFLAGS += -Wall
@@ -108,7 +131,8 @@ ifeq ($(USE_LIBGPIOD_RPI), YES)
 endif
 #CFLAGS += -DENGINE_DYNAMIC_SUPPORT
 CFLAGS += -DOPTIGA_COMMS_SET_RESET_SOFT
-CFLAGS += -DMBEDTLS_USER_CONFIG_FILE=\"../../../external/optiga-trust-m/config/mbedtls_default_config.h\"
+CFLAGS += -DMBEDTLS_USER_CONFIG_FILE=\"../config/mbedtls_4.x_default_config.h\"
+CFLAGS += -DTF_PSA_CRYPTO_USER_CONFIG_FILE=\"../config/tf_psa_default_config.h\"
 
 LDFLAGS += -lpthread
 LDFLAGS += -lssl
@@ -172,4 +196,8 @@ $(BINDIR)/$(LIB): %: $(LIBOBJ) $(INCSRC)
 
 $(LIBOBJ): %.o: %.c $(INCSRC)
 	@echo "+++++++ Generating lib object: $< "
+	@$(CC) $(CFLAGS) $< -o $@
+
+$(PROVOBJ): %.o: %.c $(INCSRC) 
+	@echo "+++++++ Generating provider object: $< "
 	@$(CC) $(CFLAGS) $< -o $@

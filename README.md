@@ -6,7 +6,7 @@ SPDX-License-Identifier: CC-BY-4.0
 # Infineon OpenSSL Interface implementation for OPTIGA™ Trust M Host Library
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
-[![REUSE](https://github.com/Infineon/optiga-trust-m-openssl/actions/workflows/reuse-lint.yml/badge.svg?branch=main)](https://github.com/Infineon/optiga-trust-m-openssl/actions/workflows/reuse-lint.yml)
+[![REUSE](git@github.com:Infineon/optiga-trust-m-openssl/actions/workflows/reuse-lint.yml/badge.svg?branch=main)](git@github.com:Infineon/optiga-trust-m-openssl/actions/workflows/reuse-lint.yml)
 
 - [Infineon OpenSSL Interface implementation for OPTIGA™ Trust M Host Library](#infineon-openssl-interface-implementation-for-optiga-trust-m-host-library)
   - [Prerequisites](#prerequisites)

@@ -27,7 +27,7 @@ contributions.
 > [documentation](README.md).
 
 Before you ask a question, it is best to search for existing
-[issues](https://github.com/Infineon/optiga-trust-m-openssl/issues) that might help you.
+[issues](git@github.com:Infineon/optiga-trust-m-openssl/issues) that might help you.
 In case you have found a suitable issue and still need clarification, you can
 write your question in this issue. It is also advisable to search the internet
 for answers first.
@@ -35,7 +35,7 @@ for answers first.
 If you then still feel the need to ask a question and need clarification, we
 recommend the following:
 
-- Open an [issue](https://github.com/Infineon/optiga-trust-m-openssl/issues/new).
+- Open an [issue](git@github.com:Infineon/optiga-trust-m-openssl/issues/new).
 - Provide as much context as you can about what you're running into.
 - Provide project and platform versions (nodejs, npm, etc), depending on what
   seems relevant.
@@ -66,7 +66,7 @@ steps in advance to help us fix any potential bug as fast as possible.
   check [this section](#i-have-a-question)).
 - To see if other users have experienced (and potentially already solved) the
   same issue you are having, check if there is not already a bug report existing
-  for your bug or error in the [bug tracker](https://github.com/Infineon/optiga-trust-m-openssl/issues?q=label%3Abug).
+  for your bug or error in the [bug tracker](git@github.com:Infineon/optiga-trust-m-openssl/issues?q=label%3Abug).
 - Also make sure to search the internet (including Stack Overflow) to see if
   users outside of the GitHub community have discussed the issue.
 - Collect information about the bug:
@@ -88,7 +88,7 @@ steps in advance to help us fix any potential bug as fast as possible.
 We use GitHub issues to track bugs and errors. If you run into an issue with the
 project:
 
-- Open an [issue](https://github.com/Infineon/optiga-trust-m-openssl/issues/new). (Since
+- Open an [issue](git@github.com:Infineon/optiga-trust-m-openssl/issues/new). (Since
   we can't be sure at this point whether it is a bug or not, we ask you not to
   talk about a bug yet and not to label the issue.)
 - Explain the behavior you would expect and the actual behavior.
@@ -121,7 +121,7 @@ community to understand your suggestion and find related suggestions.
 - Make sure that you are using the latest version.
 - Read the [documentation](README.md) carefully and find out if the
   functionality is already covered, maybe by an individual configuration.
-- Perform a [search](https://github.com/Infineon/optiga-trust-m-openssl/issues) to see
+- Perform a [search](git@github.com:Infineon/optiga-trust-m-openssl/issues) to see
   if the enhancement has already been suggested. If it has, add a comment to the
   existing issue instead of opening a new one.
 - Find out whether your idea fits with the scope and aims of the project. It's
@@ -133,7 +133,7 @@ community to understand your suggestion and find related suggestions.
 #### How do I submit a good enhancement suggestion?
 
 Enhancement suggestions are tracked as [GitHub
-issues](https://github.com/Infineon/optiga-trust-m-openssl/issues).
+issues](git@github.com:Infineon/optiga-trust-m-openssl/issues).
 
 - Use a **clear and descriptive title** for the issue to identify the
   suggestion.

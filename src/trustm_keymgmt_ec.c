@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-FileCopyrightText: Copyright (c) 2025-2026 Infineon Technologies AG
 // SPDX-License-Identifier: MIT
 
 #include <openssl/core_dispatch.h>
@@ -447,8 +447,10 @@ static int trustm_ec_keymgmt_get_params(void *keydata, OSSL_PARAM params[]) {
             || trustm_ec_key->key_curve == OPTIGA_ECC_CURVE_NIST_P_521)
             sec_bits = 256;
 
-        else if (trustm_ec_key->key_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_384R1
-                 || trustm_ec_key->key_curve == OPTIGA_ECC_CURVE_NIST_P_384)
+        else if (
+            trustm_ec_key->key_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_384R1
+            || trustm_ec_key->key_curve == OPTIGA_ECC_CURVE_NIST_P_384
+        )
             sec_bits = 192;
 
         else
@@ -634,8 +636,9 @@ static int trustm_ec_keymgmt_import(void *keydata, int selection, const OSSL_PAR
             TRUSTM_PROVIDER_DBGFN("Curve name: %s", curve_name);
             if (strcmp(curve_name, "secp384r1") == 0) {
                 trustm_ec_key->key_curve = OPTIGA_ECC_CURVE_NIST_P_384;
-            } else if (strcmp(curve_name, "prime256v1") == 0
-                       || strcmp(curve_name, "secp256r1") == 0) {
+            } else if (
+                strcmp(curve_name, "prime256v1") == 0 || strcmp(curve_name, "secp256r1") == 0
+            ) {
                 trustm_ec_key->key_curve = OPTIGA_ECC_CURVE_NIST_P_256;
             } else if (strcmp(curve_name, "secp521r1") == 0) {
                 trustm_ec_key->key_curve = OPTIGA_ECC_CURVE_NIST_P_521;
@@ -744,8 +747,8 @@ const OSSL_DISPATCH trustm_ec_keymgmt_functions[] = {
     {OSSL_FUNC_KEYMGMT_GETTABLE_PARAMS, (void (*)(void))trustm_ec_keymgmt_gettable_params},
     {OSSL_FUNC_KEYMGMT_SET_PARAMS, (void (*)(void))trustm_ec_keymgmt_set_params},
     {OSSL_FUNC_KEYMGMT_SETTABLE_PARAMS, (void (*)(void))trustm_ec_keymgmt_settable_params},
-    {OSSL_FUNC_KEYMGMT_QUERY_OPERATION_NAME, (void (*)(void))trustm_ec_keymgmt_query_operation_name
-    },
+    {OSSL_FUNC_KEYMGMT_QUERY_OPERATION_NAME,
+     (void (*)(void))trustm_ec_keymgmt_query_operation_name},
     {OSSL_FUNC_KEYMGMT_HAS, (void (*)(void))trustm_ec_keymgmt_has},
     {OSSL_FUNC_KEYMGMT_MATCH, (void (*)(void))trustm_ec_keymgmt_match},
     {OSSL_FUNC_KEYMGMT_IMPORT, (void (*)(void))trustm_ec_keymgmt_import},

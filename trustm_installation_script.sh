@@ -3,13 +3,13 @@
 # SPDX-FileCopyrightText: Copyright (c) 2026 Infineon Technologies AG
 # SPDX-License-Identifier: MIT
 
-sudo apt update 
+sudo apt update
 sudo apt -y install git gcc libssl-dev gpiod libgpiod-dev curl \
                     python3 python3-jinja2 python3-jsonschema perl
 
 (
-    echo "-----> Generate mbedtls config files" 
-    cd external/optiga-trust-m/external/mbedtls-4.x 
+    echo "-----> Generate mbedtls config files"
+    cd external/optiga-trust-m/external/mbedtls-4.x
     python3 framework/scripts/make_generated_files.py
 )
 (

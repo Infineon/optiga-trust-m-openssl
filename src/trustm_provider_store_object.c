@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-FileCopyrightText: Copyright (c) 2025-2026 Infineon Technologies AG
 // SPDX-License-Identifier: MIT
 
 #include <openssl/core_dispatch.h>
@@ -492,10 +492,11 @@ static int trustm_object_load_pkey_rsa(
             modulus_length
         );
     } else {
-        modulus_length =
-            (trustm_rsa_key->public_key[trustm_rsa_key->public_key_header_length + 11]) << 8
-            | (trustm_rsa_key->public_key[trustm_rsa_key->public_key_header_length + 12]
-            );  // get the total length in bytes of modulus
+        modulus_length = (trustm_rsa_key->public_key[trustm_rsa_key->public_key_header_length + 11])
+                             << 8
+                         | (trustm_rsa_key->public_key
+                                [trustm_rsa_key->public_key_header_length
+                                 + 12]);  // get the total length in bytes of modulus
 
         memcpy(
             modulus_buffer,
@@ -1071,11 +1072,8 @@ static int trustm_object_load(
     int ret = 0;
 
     TRUSTM_PROVIDER_DBGFN(">");
-    // todo: implement load private key from file ig
-    if (trustm_object_ctx->bio) {
-    }
-
-    else {
+    // File-based private key loading is currently unsupported.
+    if (!trustm_object_ctx->bio) {
         if ((trustm_object_ctx->key_id >= 0xE0FC) && (trustm_object_ctx->key_id <= 0xE0FD)) {
             if (trustm_object_ctx->new_key)
                 if (trustm_genpkey_rsa(trustm_object_ctx) == 0)

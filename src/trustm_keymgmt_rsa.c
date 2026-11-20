@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-FileCopyrightText: Copyright (c) 2025-2026 Infineon Technologies AG
 // SPDX-License-Identifier: MIT
 
 #include <math.h>
@@ -333,10 +333,11 @@ static void *trustm_rsa_keymgmt_gen(void *ctx, OSSL_CALLBACK *cb, void *cbarg) {
             modulus_length
         );
     } else {
-        modulus_length =
-            (trustm_rsa_key->public_key[trustm_rsa_key->public_key_header_length + 11]) << 8
-            | (trustm_rsa_key->public_key[trustm_rsa_key->public_key_header_length + 12]
-            );  // get the total length in bytes of modulus
+        modulus_length = (trustm_rsa_key->public_key[trustm_rsa_key->public_key_header_length + 11])
+                             << 8
+                         | (trustm_rsa_key->public_key
+                                [trustm_rsa_key->public_key_header_length
+                                 + 12]);  // get the total length in bytes of modulus
 
         memcpy(
             modulus_buffer,
@@ -657,8 +658,8 @@ const OSSL_DISPATCH trustm_rsa_keymgmt_functions[] = {
     {OSSL_FUNC_KEYMGMT_FREE, (void (*)(void))trustm_rsa_keymgmt_free},
     {OSSL_FUNC_KEYMGMT_GET_PARAMS, (void (*)(void))trustm_rsa_keymgmt_get_params},
     {OSSL_FUNC_KEYMGMT_GETTABLE_PARAMS, (void (*)(void))trustm_rsa_keymgmt_gettable_params},
-    {OSSL_FUNC_KEYMGMT_QUERY_OPERATION_NAME, (void (*)(void))trustm_rsa_keymgmt_query_operation_name
-    },
+    {OSSL_FUNC_KEYMGMT_QUERY_OPERATION_NAME,
+     (void (*)(void))trustm_rsa_keymgmt_query_operation_name},
     {OSSL_FUNC_KEYMGMT_HAS, (void (*)(void))trustm_rsa_keymgmt_has},
     {OSSL_FUNC_KEYMGMT_MATCH, (void (*)(void))trustm_rsa_keymgmt_match},
     {OSSL_FUNC_KEYMGMT_EXPORT, (void (*)(void))trustm_rsa_keymgmt_export},

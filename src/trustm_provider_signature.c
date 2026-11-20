@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-FileCopyrightText: Copyright (c) 2025-2026 Infineon Technologies AG
 // SPDX-License-Identifier: MIT
 
 #include <openssl/core_dispatch.h>
@@ -1479,11 +1479,11 @@ const OSSL_DISPATCH trustm_ecdsa_signature_functions[] = {
     {OSSL_FUNC_SIGNATURE_SIGN, (void (*)(void))trustm_ecdsa_signature_sign},
     {OSSL_FUNC_SIGNATURE_DIGEST_SIGN_INIT, (void (*)(void))trustm_ecdsa_signature_digest_init},
     {OSSL_FUNC_SIGNATURE_DIGEST_SIGN_UPDATE, (void (*)(void))trustm_ecdsa_signature_digest_update},
-    {OSSL_FUNC_SIGNATURE_DIGEST_SIGN_FINAL, (void (*)(void))trustm_ecdsa_signature_digest_sign_final
-    },
+    {OSSL_FUNC_SIGNATURE_DIGEST_SIGN_FINAL,
+     (void (*)(void))trustm_ecdsa_signature_digest_sign_final},
     {OSSL_FUNC_SIGNATURE_DIGEST_VERIFY_INIT, (void (*)(void))trustm_ecdsa_signature_digest_init},
-    {OSSL_FUNC_SIGNATURE_DIGEST_VERIFY_UPDATE, (void (*)(void))trustm_ecdsa_signature_digest_update
-    },
+    {OSSL_FUNC_SIGNATURE_DIGEST_VERIFY_UPDATE,
+     (void (*)(void))trustm_ecdsa_signature_digest_update},
     {OSSL_FUNC_SIGNATURE_DIGEST_VERIFY_FINAL,
      (void (*)(void))trustm_ecdsa_signature_digest_verify_final},
     {OSSL_FUNC_SIGNATURE_DIGEST_SIGN, (void (*)(void))trustm_ecdsa_signature_digest_sign},

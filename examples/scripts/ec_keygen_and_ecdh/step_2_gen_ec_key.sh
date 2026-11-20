@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+# SPDX-FileCopyrightText: Copyright (c) 2025-2026 Infineon Technologies AG
 # SPDX-License-Identifier: MIT
 
 set -eufx pipefail
@@ -8,7 +8,7 @@ set -eufx pipefail
 # alice exports public key as PEM (NIST P256, key usage auth/enc/sign/agree)
 openssl pkey -provider trustm_provider -in 0xe0f2:*:NEW:0x03:0x33 -pubout -out testkey1.pub
 
-# bob generates private key as PEM using OpenSSL 
+# bob generates private key as PEM using OpenSSL
 openssl genpkey -algorithm EC -pkeyopt group:P-256 -out testkey2.priv
 
 # bob also exports public key as PEM

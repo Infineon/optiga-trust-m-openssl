@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-FileCopyrightText: Copyright (c) 2025-2026 Infineon Technologies AG
 // SPDX-License-Identifier: MIT
 
 #ifndef _TRUSTM_PROVIDER_COMMON_H_
@@ -127,7 +127,7 @@ Shared SSL mutex across functions
 //extern shared_mutex_t ssl_mutex;
 
 /*
- * OpenSSL functions typically return 1 on success 
+ * OpenSSL functions typically return 1 on success
  * EVP probably means "enveloped" (Stack Overflow).
  */
 #define EVP_SUCCESS (1)

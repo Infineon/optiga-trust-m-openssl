@@ -6,7 +6,7 @@ SPDX-License-Identifier: CC-BY-4.0
 # Infineon OpenSSL Interface implementation for OPTIGA™ Trust M Host Library
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
-[![REUSE](git@github.com:Infineon/optiga-trust-m-openssl/actions/workflows/reuse-lint.yml/badge.svg?branch=main)](git@github.com:Infineon/optiga-trust-m-openssl/actions/workflows/reuse-lint.yml)
+[![REUSE](https://github.com/Infineon/optiga-trust-m-openssl/actions/workflows/reuse-lint.yml/badge.svg?branch=main)](https://github.com/Infineon/optiga-trust-m-openssl/actions/workflows/reuse-lint.yml)
 
 - [Infineon OpenSSL Interface implementation for OPTIGA™ Trust M Host Library](#infineon-openssl-interface-implementation-for-optiga-trust-m-host-library)
   - [Prerequisites](#prerequisites)
@@ -236,7 +236,7 @@ For more details, please refer to  [ec_sign_verify_pem_files](./examples/scripts
 The keys created inside OPTIGA™ Trust M can be referenced in two different ways
 
 1. Labels with key id. Example - 0xe0f1:
-2. Reference Keys in file format
+1. Reference Keys in file format
 
 ### 1. Labels with key id
 
@@ -289,9 +289,9 @@ NIST CURVE: P-256
 The following provides an example of an RSA reference key.
 
 - The value reserved for 'p' ('prime1') is used as a magic number and is
-   set to '1'
+  set to '1'
 - The value reserved for 'q' ('prime2') is used to store the 16 bit key
-   identifier (in the example below 0xe0fc)
+  identifier (in the example below 0xe0fc)
 
 ```text
 Private-Key: (2047 bit, 2 primes)
@@ -667,7 +667,7 @@ Create OPTIGA™ Trust M CA key pair with the following parameters:
 - OID 0xE0F2
 - Public key store in 0xF1D2
 - Self signed CA cert with subject
-  - Organization : Infineon OPTIGA(TM) Trust M
+  - Organization : `Infineon OPTIGA(TM) Trust M`
   - Common Name : UID of Trust M
   - expiry days : ~10 years
 
@@ -750,7 +750,7 @@ Please see our [LICENSE](LICENSE) for copyright and license information.
 
 This project follows the [REUSE](https://reuse.software/) approach, so copyright and licensing
 information is available for every file (including third party components) either in the file
-header, an individual *.license file or the [REUSE.toml](REUSE.toml) file. All licenses can be found in the
+header, an individual *.license file or a REUSE.toml file. All licenses can be found in the
 [LICENSES](LICENSES) folder.
 
 ### Related resources

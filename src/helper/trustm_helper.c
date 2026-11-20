@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-FileCopyrightText: Copyright (c) 2025-2026 Infineon Technologies AG
 // SPDX-License-Identifier: MIT
 
 #include "trustm_helper.h"
@@ -173,7 +173,7 @@ static uint8_t __trustm_secCnt(void)
         {
             read_data_buffer[0] = 0;
             break;
-        }        
+        }
 
     } while(FALSE);
 

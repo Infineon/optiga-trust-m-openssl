@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-# SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+# SPDX-FileCopyrightText: Copyright (c) 2025-2026 Infineon Technologies AG
 # SPDX-License-Identifier: MIT
 
 OPENSSL_CONF=cert_ext_trustm.cnf curl \

@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-FileCopyrightText: Copyright (c) 2025-2026 Infineon Technologies AG
 // SPDX-License-Identifier: MIT
 
 #include <math.h>
@@ -65,8 +65,9 @@ static TRUSTM_RSA_PUBKEY *trustm_get_rsa_pubkey(const trustm_rsa_key_t *pkey) {
         );
     } else {
         modulus_length = (pkey->public_key[pkey->public_key_header_length + 11]) << 8
-                         | (pkey->public_key[pkey->public_key_header_length + 12]
-                         );  // get the total length in bytes of modulus
+                         | (pkey->public_key
+                                [pkey->public_key_header_length
+                                 + 12]);  // get the total length in bytes of modulus
 
         memcpy(
             modulus_buffer,

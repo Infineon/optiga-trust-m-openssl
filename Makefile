@@ -91,7 +91,7 @@ ifdef LIBDIR
         endif
     endif
 
-    LIBSRC += $(shell find $(LIBDIR) -name '*.c') 
+    LIBSRC += $(shell find $(LIBDIR) -name '*.c')
     LIBOBJ := $(patsubst %.c,%.o,$(LIBSRC))
     LIB = libtrustm.so
 endif
@@ -138,7 +138,7 @@ LDFLAGS += -lpthread
 LDFLAGS += -lssl
 ifeq ($(USE_LIBGPIOD_RPI), YES)
     LDFLAGS += -lgpiod
-endif  
+endif
 LDFLAGS += -lcrypto
 LDFLAGS += -lrt
 LDFLAGS += -Wl,--no-undefined
@@ -159,35 +159,35 @@ install:
 	@cp $(realpath $(BINDIR)/$(PROVIDER)) $(PROVIDER_INSTALL_DIR)/$(PROVIDER)
 	@echo "Create symbolic link to trustm_lib $(LIB_INSTALL_DIR)/$(LIB)"
 	@cp $(realpath $(BINDIR)/$(LIB)) $(LIB_INSTALL_DIR)/$(LIB)
-	
+
 uninstall: clean
-	@echo "Removing openssl symbolic link from $(PROVIDER_INSTALL_DIR)"	
+	@echo "Removing openssl symbolic link from $(PROVIDER_INSTALL_DIR)"
 	@rm -rf $(PROVIDER_INSTALL_DIR)/$(PROVIDER)
 	@echo "Removing trustm_lib $(LIB_INSTALL_DIR)/$(LIB)"
 	@rm -rf $(LIB_INSTALL_DIR)/$(LIB)
 
 clean :
-	@echo "Removing *.o from $(LIBDIR)" 
+	@echo "Removing *.o from $(LIBDIR)"
 	@rm -rf $(LIBOBJ)
-	@echo "Removing *.o from $(OTHDIR)" 
+	@echo "Removing *.o from $(OTHDIR)"
 	@rm -rf $(OTHOBJ)
 	@echo "Removing *.o from $(PROVDIR)"
 	@rm -rf $(PROVOBJ)
-	@echo "Removing all application from $(BINDIR)"	
+	@echo "Removing all application from $(BINDIR)"
 	@rm -rf bin/*
-	@echo "Removing all hidden files"	
+	@echo "Removing all hidden files"
 	@rm -rf .trustm_*
-			
+
 $(BINDIR)/$(PROVIDER): %: $(PROVOBJ) $(INCSRC) $(BINDIR)/$(LIB)
 	@echo "******* Linking $@ "
 	@mkdir -p bin
 	@$(CC)   $(PROVOBJ) $(LDFLAGS) $(LDFLAGS_1) $(LDFLAGS_2)  -shared -o $@
-	
+
 $(APPS): %: $(OTHOBJ) $(INCSRC) $(BINDIR)/$(LIB) %.o
 			@echo "******* Linking $@ "
 			@mkdir -p bin
 			@$(CC) $@.o $(LDFLAGS_1) $(LDFLAGS) $(OTHOBJ) -o $@
-			@mv $@ bin/.	
+			@mv $@ bin/.
 
 $(BINDIR)/$(LIB): %: $(LIBOBJ) $(INCSRC)
 	@echo "******* Linking $@ "
@@ -198,6 +198,6 @@ $(LIBOBJ): %.o: %.c $(INCSRC)
 	@echo "+++++++ Generating lib object: $< "
 	@$(CC) $(CFLAGS) $< -o $@
 
-$(PROVOBJ): %.o: %.c $(INCSRC) 
+$(PROVOBJ): %.o: %.c $(INCSRC)
 	@echo "+++++++ Generating provider object: $< "
 	@$(CC) $(CFLAGS) $< -o $@

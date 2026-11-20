@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-FileCopyrightText: Copyright (c) 2025-2026 Infineon Technologies AG
 // SPDX-License-Identifier: MIT
 
 #include <openssl/core_dispatch.h>
@@ -16,6 +16,9 @@
 #include "trustm_provider_common.h"
 
 #define NELEMS(x) (sizeof(x) / sizeof((x)[0]))
+#define TRUSTM_PROV_NAME "OPTIGA Trust M"
+#define TRUSTM_PROV_VERSION "1.0.6"
+#define TRUSTM_PROV_BUILDINFO TRUSTM_PROV_VERSION
 
 ///////////////////////////////// trustm hardware related /////////////////////////////////
 #ifdef WORKAROUND
@@ -307,7 +310,6 @@ static const OSSL_ALGORITHM trustm_digests[] = {
 extern const OSSL_DISPATCH trustm_rsa_keymgmt_functions[];
 extern const OSSL_DISPATCH trustm_ec_keymgmt_functions[];
 
-// todo: add ec key management here too
 static const OSSL_ALGORITHM trustm_keymgmts[] = {
     {"RSA:rsaEncryption", "provider=trustm", trustm_rsa_keymgmt_functions},
     {"EC:id-ecPublicKey", "provider=trustm", trustm_ec_keymgmt_functions},
@@ -337,7 +339,6 @@ extern const OSSL_DISPATCH trustm_ec_encoder_PrivateKeyInfo_der_functions[];
 extern const OSSL_DISPATCH trustm_rsa_encoder_PrivateKeyInfo_pem_functions[];
 extern const OSSL_DISPATCH trustm_rsa_encoder_PrivateKeyInfo_der_functions[];
 
-// todo: add pem and der encoding format here too
 static const OSSL_ALGORITHM trustm_encoders[] = {
     {"RSA", "provider=trustm,output=der,structure=pkcs1", trustm_rsa_encoder_pkcs1_der_functions},
     {"RSA", "provider=trustm,output=pem,structure=pkcs1", trustm_rsa_encoder_pkcs1_pem_functions},
@@ -433,9 +434,10 @@ trustm_query_operation(void *provctx, int operation_id, int *no_cache) {
 
 static const OSSL_PARAM *trustm_gettable_params(void *provctx) {
     static const OSSL_PARAM param_types[] = {
-        OSSL_PARAM_DEFN("name", OSSL_PARAM_UTF8_PTR, NULL, 0),
-        OSSL_PARAM_DEFN("version", OSSL_PARAM_UTF8_PTR, NULL, 0),
-        OSSL_PARAM_DEFN("build", OSSL_PARAM_UTF8_PTR, NULL, 0),
+        OSSL_PARAM_DEFN(OSSL_PROV_PARAM_NAME, OSSL_PARAM_UTF8_PTR, NULL, 0),
+        OSSL_PARAM_DEFN(OSSL_PROV_PARAM_VERSION, OSSL_PARAM_UTF8_PTR, NULL, 0),
+        OSSL_PARAM_DEFN(OSSL_PROV_PARAM_BUILDINFO, OSSL_PARAM_UTF8_PTR, NULL, 0),
+        OSSL_PARAM_DEFN(OSSL_PROV_PARAM_STATUS, OSSL_PARAM_INTEGER, NULL, 0),
         OSSL_PARAM_END
     };
 
@@ -445,19 +447,18 @@ static const OSSL_PARAM *trustm_gettable_params(void *provctx) {
 static int trustm_get_params(void *provctx, OSSL_PARAM params[]) {
     OSSL_PARAM *p;
 
-    for (p = params; p->key != NULL; p++) {
-        if (strcasecmp(p->key, "name") == 0) {
-            *(const void **)p->data = "OPTIGA Trust M";
-        }
-
-        else if (strcasecmp(p->key, "version") == 0) {
-            *(const void **)p->data = "1.0";
-        }
-
-        if (strcasecmp(p->key, "build") == 0) {
-            *(const void **)p->data = "abc";
-        }
-    }
+    p = OSSL_PARAM_locate(params, OSSL_PROV_PARAM_NAME);
+    if (p != NULL && !OSSL_PARAM_set_utf8_ptr(p, TRUSTM_PROV_NAME))
+        return 0;
+    p = OSSL_PARAM_locate(params, OSSL_PROV_PARAM_VERSION);
+    if (p != NULL && !OSSL_PARAM_set_utf8_ptr(p, TRUSTM_PROV_VERSION))
+        return 0;
+    p = OSSL_PARAM_locate(params, OSSL_PROV_PARAM_BUILDINFO);
+    if (p != NULL && !OSSL_PARAM_set_utf8_ptr(p, TRUSTM_PROV_BUILDINFO))
+        return 0;
+    p = OSSL_PARAM_locate(params, OSSL_PROV_PARAM_STATUS);
+    if (p != NULL && !OSSL_PARAM_set_int(p, 1))
+        return 0;
 
     return 1;
 }
@@ -534,7 +535,6 @@ trustm_get_capabilities(void *provctx, const char *capability, OSSL_CALLBACK *cb
     return 0;
 }
 
-// todo: expand this list as more functions get implemented
 static const OSSL_ITEM *trustm_get_reason_strings(void *provctx) {
     static const OSSL_ITEM reason_strings[] = {
         {TRUSTM_ERR_INIT_FAILURE, "TrustM Error Initializtion Failed"},
@@ -545,7 +545,6 @@ static const OSSL_ITEM *trustm_get_reason_strings(void *provctx) {
     return reason_strings;
 }
 
-// todo: expand this list as more functions get implemented
 static const OSSL_DISPATCH trustm_dispatch_table[] = {
     {OSSL_FUNC_PROVIDER_GETTABLE_PARAMS, (void (*)(void))trustm_gettable_params},
     {OSSL_FUNC_PROVIDER_GET_PARAMS, (void (*)(void))trustm_get_params},

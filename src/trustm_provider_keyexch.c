@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+// SPDX-FileCopyrightText: Copyright (c) 2025-2026 Infineon Technologies AG
 // SPDX-License-Identifier: MIT
 
 #include <openssl/core_dispatch.h>
@@ -168,8 +168,10 @@ static int trustm_keyexch_derive_kdf(
         || trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_256R1)
         shared_secret_length = 32;
 
-    else if (trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_NIST_P_384
-             || trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_384R1)
+    else if (
+        trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_NIST_P_384
+        || trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_384R1
+    )
         shared_secret_length = 48;
 
     else if (trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_512R1)
@@ -266,8 +268,10 @@ static int trustm_keyexch_derive_plain(
         || trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_256R1)
         shared_secret_length = 32;
 
-    else if (trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_NIST_P_384
-             || trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_384R1)
+    else if (
+        trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_NIST_P_384
+        || trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_384R1
+    )
         shared_secret_length = 48;
 
     else if (trustm_keyexch_ctx->peer_curve == OPTIGA_ECC_CURVE_BRAIN_POOL_P_512R1)
